@@ -2559,6 +2559,9 @@
   <file>
     <name>$PROJ_DIR$\..\main.c</name>
   </file>
+  <file>
+    <name>$PROJ_DIR$\..\time.c</name>
+  </file>
 </project>
 
 

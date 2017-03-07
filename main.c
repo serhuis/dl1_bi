@@ -47,12 +47,9 @@
 #include <stdio.h>                    /* standard I/O .h-file                */
 #include <string.h>                   /* string and memory functions         */
 
-#include  "hardware.h"
+
 #include  "main.h"
-#include  "flash.h"
-#include  "type.h"
-#include  "delay.h"
-//#include  "soft_uart.h"
+
 
 
 /*********************************************************************************/
@@ -484,29 +481,6 @@ void main(void) {
 
 
 //--------------------------------------------------------------------------------
-// Function		: void SoundStart(u8 snd_ind)
-// Parameters	: snd_ind - number of sound
-// Return		: None
-// Description	: Function initiates sound sequence
-//--------------------------------------------------------------------------------
-void Timer_A_Enable(void) {
-	_BIC_SR(GIE);    					// Запрещаем прерывания
-	
-	fTimerA_Enable = 1;
-	//
-	fLPM3 		= 0;					// Выключаем режим энергосбережения	
-	//
-	// If sound don't enable
-	TACTL 	 = TASSEL_2 + MC_1;     // SMCLK, up mode
-	CCR0 	 = 9 * 8 - 1;      		// Period T(us) * F(MHz)
-	TACCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
-	//
-	_BIS_SR(GIE);    					// Разрешаем прерывания
-}
-
-
-
-//--------------------------------------------------------------------------------
 // Function		: __interrupt void watchdog_timer (void)
 // Parameters	: None
 // Return		: None
@@ -527,28 +501,7 @@ __interrupt void watchdog_timer (void) {
 
 
 
-//--------------------------------------------------------------------------------
-// Function		: __interrupt void CCR0_ISR(void)
-// Parameters	: None
-// Return		: None
-// Description	: TIMER0 Interrupt routine
-//--------------------------------------------------------------------------------
-#pragma vector = TIMER0_A0_VECTOR
-__interrupt void CCR0_ISR(void) {
-  fTimerA_On = 1;
-	/*
-	if (fRedLedFlash) {
-		fRedLedFlash = 0;
-		RED_CLR();
-		//
-		fTimerA_Enable = 0;
-		TACTL = 0;  
-		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
-		//
-		return;
-	}
-	*/
-} // CCR0_ISR
+
 
 
 
@@ -589,38 +542,6 @@ u16 GetVCC(u8 boost_stop) {
 	return (res);			
 }
 
-
-
-
-//--------------------------------------------------------------------------------
-// Function		: void VREF_On(void)
-// Parameters	: None 
-// Return		: None
-// Description	: Enable VREF
-//--------------------------------------------------------------------------------
-void VREF_On(void) {
-
-	ADC10CTL0 = REFOUT + REFON + SREF_1 + MSC + ADC10ON;
-	ADC10AE0 |= 0x10;                         // P1.4 ADC option select (VRef Out)
-
-}
-
-
-
-//--------------------------------------------------------------------------------
-// Function		: void VREF_Off(void)
-// Parameters	: None
-// Return		: None
-// Description	: Disable VREF
-//--------------------------------------------------------------------------------
-void VREF_Off(void) {
-
-	ADC10CTL0 = 0;							// Disable ADC & +VREF
-	ADC10CTL0 = 0;							//
-}
-
-
-
 //--------------------------------------------------------------------------------
 // Function		: void ADC10_ISR(void)
 // Parameters	: None
@@ -631,9 +552,7 @@ void VREF_Off(void) {
 __interrupt void ADC10_ISR(void) {
 
 	//ADC10AE0 &= ~0x0F;                      // Save only VRef Out
-	
 	adc_process = 0;
-	
 	fEndOfSamples = 1;
 	
 	//__bic_SR_register_on_exit(CPUOFF);      // Clear CPUOFF bit from 0(SR)

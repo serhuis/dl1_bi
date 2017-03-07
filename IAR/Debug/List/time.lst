@@ -1,0 +1,80 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  15:57:16
+# Copyright 1996-2015 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  regvar
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430
+#    Source file   =  E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
+#    Command line  =  
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c -lcN
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List -o
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --debug
+#        -D__MSP430G2332__ -e --double=32 --regvar_r4 --dlib_config "C:\Program
+#        Files (x86)\IAR Systems\Embedded Workbench 7.3\430\lib\dlib\dl430fn.h"
+#        -I ..\ -I .\ -Oh
+#    List file     =  
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List\time.lst
+#    Object file   =  
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj\time.r43
+#
+###############################################################################
+
+E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
+      1          //time.c
+      2          
+      3          #include "main.h"
+      4          #include "time.h"
+      5          
+      6          
+      7          //--------------------------------------------------------------------------------
+      8          // Function		: __interrupt void CCR0_ISR(void)
+      9          // Parameters	: None
+     10          // Return		: None
+     11          // Description	: TIMER0 Interrupt routine
+     12          //--------------------------------------------------------------------------------
+     13          #pragma vector = TIMER0_A0_VECTOR
+     14          __interrupt void CCR0_ISR(void) {
+     15            fTimerA_On = 1;
+     16          	/*
+     17          	if (fRedLedFlash) {
+     18          		fRedLedFlash = 0;
+     19          		RED_CLR();
+     20          		//
+     21          		fTimerA_Enable = 0;
+     22          		TACTL = 0;  
+     23          		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
+     24          		//
+     25          		return;
+     26          	}
+     27          	*/
+     28          } // CCR0_ISR
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   CCR0_ISR
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       6  CCR0_ISR
+       2  CCR0_ISR::??INTVEC 18
+
+ 
+ 6 bytes in segment CODE
+ 2 bytes in segment INTVEC
+ 
+ 6 bytes of CODE  memory
+ 0 bytes of CONST memory (+ 2 bytes shared)
+
+Errors: none
+Warnings: none

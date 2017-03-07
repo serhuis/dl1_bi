@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  15:34:31
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  15:57:16
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -10,22 +10,22 @@
 #    __reg_r5      =  free
 #    __pic         =  no
 #    __core        =  430
-#    Source file   =  E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\flash.c
+#    Source file   =  E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\flash.c
 #    Command line  =  
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\flash.c -lcN
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\List -o
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\Obj --debug
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\flash.c -lcN
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List -o
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --debug
 #        -D__MSP430G2332__ -e --double=32 --regvar_r4 --dlib_config "C:\Program
 #        Files (x86)\IAR Systems\Embedded Workbench 7.3\430\lib\dlib\dl430fn.h"
 #        -I ..\ -I .\ -Oh
 #    List file     =  
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\List\flash.lst
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List\flash.lst
 #    Object file   =  
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\Obj\flash.r43
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj\flash.r43
 #
 ###############################################################################
 
-E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\flash.c
+E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\flash.c
       1          /**********************************************************************************
       2           *
       3           *      Flash operation routines

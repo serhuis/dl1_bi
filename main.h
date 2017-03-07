@@ -24,6 +24,12 @@
 /*                                 INCLUDES                                      */
 /*********************************************************************************/
 #include "type.h"
+#include  "hardware.h"
+#include  "flash.h"
+#include  "type.h"
+#include  "delay.h"
+//#include  "soft_uart.h"
+#include "time.h"
 
 
 /*********************************************************************************/
@@ -177,6 +183,7 @@ extern u16 		delta;
 extern u8 		Timer50msCounter;
 
 //extern s16		signal_array[SIGNAL_ARRAY_LEN];
+extern tFlags 	f;
 
 
 
