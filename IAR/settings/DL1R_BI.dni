@@ -8,6 +8,14 @@ UseTrigger=1
 TriggerName=main
 LimitSize=0
 ByteLimit=50
+[DebugChecksum]
+Checksum=2111093905
+[CodeCoverage]
+Enabled=_ 0
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
 [InterruptLog]
 LogEnabled=0
 GraphEnabled=0
@@ -22,7 +30,12 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 [Breakpoints2]
-Count=0
+Bp0=_ 1 "STD_CODE2" "{$PROJ_DIR$\..\main.c}.223.2" 0 0 1 "" 0 ""
+Bp1=_ 1 "STD_CODE2" "{$PROJ_DIR$\..\main.c}.219.2" 0 0 1 "" 0 ""
+Bp2=_ 1 "STD_CODE2" "{$PROJ_DIR$\..\main.c}.174.2" 0 0 1 "" 0 ""
+Bp3=_ 1 "STD_CODE2" "{$PROJ_DIR$\..\hardware.c}.125.2" 0 0 1 "" 0 ""
+Bp4=_ 1 "STD_CODE2" "{$PROJ_DIR$\..\hardware.c}.127.2" 0 0 1 "" 0 ""
+Count=5
 [Interrupts]
 Enabled=1
 [MemoryMap]
@@ -32,9 +45,26 @@ UseAuto=0
 TypeViolation=1
 UnspecRange=1
 ActionState=1
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+Exclusions=
 [Trace1]
 Enabled=0
 ShowSource=1
+[CallStackLog]
+Enabled=0
+[CallStackStripe]
+ShowTiming=1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0

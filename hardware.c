@@ -101,10 +101,10 @@ void INTER_INT_Init(void) {
 	
 	INTER_DIR &= ~INTER_BIT;
 	INTER_IES |= INTER_BIT;  		// прерывание по переходу из 1 в 0, 
-                					// устанавливается соответствующим битом IES.x = 1.
+                							// устанавливается соответствующим битом IES.x = 1.
 	INTER_IFG &= ~INTER_BIT; 		// Для предотвращения немедленного срабатывания прерывания,
-                					// обнуляем его флаг для P1.3 до разрешения прерываний
-	INTER_IE  |= INTER_BIT;   		// Разрешаем прерывания для P1.3
+                							// обнуляем его флаг для P1.3 до разрешения прерываний
+	INTER_IE  |= INTER_BIT;   	// Разрешаем прерывания для P1.3
 }
 
 
@@ -121,6 +121,12 @@ void GPIO_Init(void) {
 	
 	RED_DIR 		|= RED_BIT;
 	YEL_DIR 		|= YEL_BIT;
+	IRED_DIR		|= IRED_BIT;
+	LN_SYNC_DIR |= LN_SYNC_BIT;
+	IR_SYNC_DIR |= IR_SYNC_BIT;
+	IR_SYNC_CLR();
+	
+	
 	
 	
 

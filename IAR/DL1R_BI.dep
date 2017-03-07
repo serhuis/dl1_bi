@@ -47,11 +47,13 @@
       <file>$PROJ_DIR$\Debug\List\flash.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\..\..\current\hardware.h</file>
       <file>$PROJ_DIR$\Debug\List\time.lst</file>
       <file>$PROJ_DIR$\..\time.c</file>
       <file>$PROJ_DIR$\..\time.h</file>
       <file>$PROJ_DIR$\Debug\Obj\time.r43</file>
       <file>$PROJ_DIR$\Debug\Obj\time.pbi</file>
+      <file>$PROJ_DIR$\..\..\current\delay.c</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
@@ -104,11 +106,11 @@
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 31 32 35 22 14 30 40 36 18 33 11 1 19 16 6 28 29 43</file>
+          <file> 31 32 35 22 14 30 40 36 18 33 11 1 19 16 6 28 29 44</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 11 14 28 18 32 40 6 30 1 16 33 35 22 36 19 43 31 29</file>
+          <file> 11 14 28 18 32 40 6 30 1 16 33 35 22 36 19 44 31 29</file>
         </tool>
       </inputs>
     </file>
@@ -127,11 +129,11 @@
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 13 32 35 22 14 30 40 36 18 25 31 28 16 33 11 1 19 6 29 43</file>
+          <file> 13 32 35 22 14 30 40 36 18 25 31 28 16 33 11 1 19 6 29 44</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 32 16 30 29 28 18 40 14 35 6 31 25 22 36 33 43 11 1 13 19</file>
+          <file> 16 32 30 29 1 28 18 40 14 35 6 31 25 22 36 33 44 11 13 19</file>
         </tool>
       </inputs>
     </file>
@@ -150,11 +152,11 @@
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 33 11 1 19 16 28 6 29 43</file>
+          <file> 33 11 1 19 16 28 6 29 44</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 16 6 1 28 11 19 29 33 43</file>
+          <file> 6 19 11 1 28 16 29 33 44</file>
         </tool>
       </inputs>
     </file>
@@ -169,7 +171,7 @@
       <inputs>
         <tool>
           <name>XLINK</name>
-          <file> 26 12 20 15 39 44 7</file>
+          <file> 26 12 20 15 39 45 7</file>
         </tool>
       </inputs>
     </file>
@@ -178,21 +180,21 @@
       <outputs>
         <tool>
           <name>ICC430</name>
-          <file> 41 44</file>
+          <file> 42 45</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 45</file>
+          <file> 46</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 28 16 33 11 1 19 6 29 43</file>
+          <file> 28 16 33 11 1 19 6 29 44</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 11 6 16 29 1 33 43 28 19</file>
+          <file> 6 16 29 44 33 11 1 28 19</file>
         </tool>
       </inputs>
     </file>
