@@ -1,0 +1,209 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           06/Mar/2017  17:43:02
+# Copyright 1996-2015 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  regvar
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430
+#    Source file   =  E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\hardware.c
+#    Command line  =  
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\hardware.c -lcN
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\List -o
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\Obj --debug
+#        -D__MSP430G2332__ -e --double=32 --regvar_r4 --dlib_config "C:\Program
+#        Files (x86)\IAR Systems\Embedded Workbench 7.3\430\lib\dlib\dl430fn.h"
+#        -I ..\ -I .\ -Oh
+#    List file     =  
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\List\hardware.lst
+#    Object file   =  
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\Obj\hardware.r43
+#
+###############################################################################
+
+E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\hardware.c
+      1          /**********************************************************************************
+      2           *
+      3           *      Hardware routines
+      4           *
+      5           **********************************************************************************
+      6           * FileName:        hardware.c
+      7           * Version:			1.00
+      8           *
+      9           * Processor:       MSP430G2xxx
+     10           * Complier:        IAR Workbench for MSP430 v4.50 or higher
+     11           *                  
+     12           * Company:         ARTON
+     13           *
+     14           *
+     15           * Author               Date      	Version	  		Comment
+     16           *-------------------------------------------------------------------------------
+     17           * Oleg Semeniuk	 16.11.2013    	1.00		Release for v1.00
+     18           *
+     19          
+     20           *********************************************************************************/
+     21          /*********************************************************************************/
+     22          /*                                 INCLUDES                                      */
+     23          /*********************************************************************************/
+     24          #include  "hardware.h"
+     25          #include  "main.h"
+     26          
+     27          /*********************************************************************************/
+     28          /*                                 VARIABLES                                     */
+     29          /*********************************************************************************/
+     30          	 
+     31          extern __regvar __no_init tFlags 	f 	 @ __R4; 
+     32          
+     33          
+     34          
+     35          /*********************************************************************************/
+     36          /*                                FUNCTIONS                                      */
+     37          /*********************************************************************************/
+     38          
+     39          
+     40          
+     41          //--------------------------------------------------------------------------------
+     42          // Function		: __interrupt void PORT1_ISR(void)
+     43          // Parameters	: None
+     44          // Return		: None
+     45          // Description	: GPIO Interrupt routine for Soft UART & Button Press 
+     46          //--------------------------------------------------------------------------------
+     47          #pragma vector=PORT1_VECTOR
+     48          __interrupt void PORT1_ISR(void) {   
+     49          	//
+     50          	if (BUT_IFG & BUT_BIT) {
+     51          		BUT_IFG &= ~BUT_BIT;    		// Обнуляем флаг прерывания
+     52                  //
+     53          		if (BUT_IES & BUT_BIT) {		// Спадающий фронт
+     54          			BUT_IES &= ~BUT_BIT;
+     55          			fButtonDownOn = 1;
+     56          		}else{
+     57          			BUT_IES |= BUT_BIT;
+     58          			fButtonUpOn = 1;
+     59          		}
+     60          		//
+     61          		__bic_SR_register_on_exit(LPM3_bits);               // Clear LPM3 bits from 0(SR) Просыпаемся
+     62          	}
+     63          }
+     64          
+     65          
+     66          
+     67          //--------------------------------------------------------------------------------
+     68          // Function		: __interrupt void PORT2_ISR(void)
+     69          // Parameters	: None
+     70          // Return		: None
+     71          // Description	: GPIO Interrupt routine for RF Button Press 
+     72          //--------------------------------------------------------------------------------
+     73          #pragma vector=PORT2_VECTOR
+     74          __interrupt void PORT2_ISR(void) {   
+     75          	
+     76          	//
+     77          	if ((INTER_IE & INTER_BIT) && (INTER_IFG & INTER_BIT)) {
+     78          		INTER_IFG &= ~INTER_BIT;    			// Обнуляем флаг прерывания
+     79                  //
+     80          		BCSCTL1 = CALBC1_8MHZ; 					// Используем частоту 8 MГц
+     81          		DCOCTL =  CALDCO_8MHZ;
+     82          		//
+     83          		fRxLineDownOn = 1;
+     84          		//
+     85          		//__bic_SR_register_on_exit(LPM3_bits);   // Clear LPM3 bits from 0(SR) Просыпаемся
+     86          		
+     87          	}
+     88          }
+     89          
+     90          //---------------------------------------------------------------------------------
+     91          // Function		: void INTER_INT_Init(void)
+     92          // Parameters	: None
+     93          // Return		: None
+     94          // Description	: Initialization interrupts from Intercom (Soft UART)
+     95          //---------------------------------------------------------------------------------
+     96          void INTER_INT_Init(void) {
+     97          	//
+     98          	INTER_REN |= INTER_BIT; 		// PULL enable
+     99          	INTER_OUT |= INTER_BIT;			// PULLUP Resistor 
+    100          	
+    101          	INTER_DIR &= ~INTER_BIT;
+    102          	INTER_IES |= INTER_BIT;  		// прерывание по переходу из 1 в 0, 
+    103                          					// устанавливается соответствующим битом IES.x = 1.
+    104          	INTER_IFG &= ~INTER_BIT; 		// Для предотвращения немедленного срабатывания прерывания,
+    105                          					// обнуляем его флаг для P1.3 до разрешения прерываний
+    106          	INTER_IE  |= INTER_BIT;   		// Разрешаем прерывания для P1.3
+    107          }
+    108          
+    109          
+    110          //---------------------------------------------------------------------------------
+    111          // Function		: void GPIO_Init(void)
+    112          // Parameters	: None
+    113          // Return		: None
+    114          // Description	: Initialization GPIO 
+    115          //---------------------------------------------------------------------------------
+    116          void GPIO_Init(void) {
+    117          
+    118          	P1OUT = 0;	
+    119          	P2OUT = 0;
+    120          	
+    121          	RED_DIR 		|= RED_BIT;
+    122          	YEL_DIR 		|= YEL_BIT;
+    123          	
+    124          
+    125          	P1SEL = 0;
+    126          	P2SEL = 0;
+    127          	
+    128          	INTER_INT_Init();				// Init interrupts from Intercom
+    129          }
+    130          
+    131          // End hardware.c
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      2   GPIO_Init
+      0   INTER_INT_Init
+      4   PORT1_ISR
+      4   PORT2_ISR
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      38  ?Subroutine0
+       1  BCSCTL1
+       1  CALBC1_8MHZ
+       1  CALDCO_8MHZ
+       1  DCOCTL
+      30  GPIO_Init
+       0  INTER_INT_Init
+       1  P1DIR
+       1  P1IES
+       1  P1IFG
+       1  P1OUT
+       1  P1SEL
+       1  P2DIR
+       1  P2IE
+       1  P2IES
+       1  P2IFG
+       1  P2OUT
+       1  P2REN
+       1  P2SEL
+      40  PORT1_ISR
+       2  PORT1_ISR::??INTVEC 4
+      36  PORT2_ISR
+       2  PORT2_ISR::??INTVEC 6
+
+ 
+ 144 bytes in segment CODE
+  16 bytes in segment DATA16_AN
+   4 bytes in segment INTVEC
+ 
+ 144 bytes of CODE  memory
+   0 bytes of CONST memory (+  4 bytes shared)
+   0 bytes of DATA  memory (+ 16 bytes shared)
+
+Errors: none
+Warnings: none
