@@ -176,14 +176,14 @@ typedef union {
 /*********************************************************************************/
 /*                        EXTERNAL VARIABLES                                     */
 /*********************************************************************************/
-
+//extern tFlags 	f;					//system flags
 extern tFault	DeviceFault;
 extern u16 		dark;
 extern u16 		delta;
 extern u8 		Timer50msCounter;
 
 //extern s16		signal_array[SIGNAL_ARRAY_LEN];
-extern tFlags 	f;
+
 
 
 
@@ -192,7 +192,6 @@ extern tFlags 	f;
 /*********************************************************************************/
 // Function prototipes
 void DeviceStart(void);
-void VLO_TimerCalibr(void);
 u16  DefineCurLevel(void);
 void SetLimitCompens(void);
 void SetLevels(u16 norm);

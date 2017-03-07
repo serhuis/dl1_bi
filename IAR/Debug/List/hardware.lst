@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  15:57:16
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  16:05:05
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -160,5 +160,50 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
     132          
     133          // End hardware.c
 
-Errors: 1
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      2   GPIO_Init
+      0   INTER_INT_Init
+      4   PORT1_ISR
+      4   PORT2_ISR
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      38  ?Subroutine0
+       1  BCSCTL1
+       1  CALBC1_8MHZ
+       1  CALDCO_8MHZ
+       1  DCOCTL
+      30  GPIO_Init
+       0  INTER_INT_Init
+       1  P1DIR
+       1  P1OUT
+       1  P1SEL
+       1  P2DIR
+       1  P2IE
+       1  P2IES
+       1  P2IFG
+       1  P2OUT
+       1  P2REN
+       1  P2SEL
+       2  PORT1_ISR
+       2  PORT1_ISR::??INTVEC 4
+      36  PORT2_ISR
+       2  PORT2_ISR::??INTVEC 6
+
+ 
+ 106 bytes in segment CODE
+  14 bytes in segment DATA16_AN
+   4 bytes in segment INTVEC
+ 
+ 106 bytes of CODE  memory
+   0 bytes of CONST memory (+  4 bytes shared)
+   0 bytes of DATA  memory (+ 14 bytes shared)
+
+Errors: none
 Warnings: none
