@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           06/Mar/2017  17:43:02
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  15:35:28
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -74,7 +74,7 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\hardware.c
      46          //--------------------------------------------------------------------------------
      47          #pragma vector=PORT1_VECTOR
      48          __interrupt void PORT1_ISR(void) {   
-     49          	//
+     49          	/*
      50          	if (BUT_IFG & BUT_BIT) {
      51          		BUT_IFG &= ~BUT_BIT;    		// Обнуляем флаг прерывания
      52                  //
@@ -88,75 +88,77 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\hardware.c
      60          		//
      61          		__bic_SR_register_on_exit(LPM3_bits);               // Clear LPM3 bits from 0(SR) Просыпаемся
      62          	}
-     63          }
-     64          
+     63          	*/
+     64          }
      65          
      66          
-     67          //--------------------------------------------------------------------------------
-     68          // Function		: __interrupt void PORT2_ISR(void)
-     69          // Parameters	: None
-     70          // Return		: None
-     71          // Description	: GPIO Interrupt routine for RF Button Press 
-     72          //--------------------------------------------------------------------------------
-     73          #pragma vector=PORT2_VECTOR
-     74          __interrupt void PORT2_ISR(void) {   
-     75          	
-     76          	//
-     77          	if ((INTER_IE & INTER_BIT) && (INTER_IFG & INTER_BIT)) {
-     78          		INTER_IFG &= ~INTER_BIT;    			// Обнуляем флаг прерывания
-     79                  //
-     80          		BCSCTL1 = CALBC1_8MHZ; 					// Используем частоту 8 MГц
-     81          		DCOCTL =  CALDCO_8MHZ;
-     82          		//
-     83          		fRxLineDownOn = 1;
-     84          		//
-     85          		//__bic_SR_register_on_exit(LPM3_bits);   // Clear LPM3 bits from 0(SR) Просыпаемся
-     86          		
-     87          	}
-     88          }
-     89          
-     90          //---------------------------------------------------------------------------------
-     91          // Function		: void INTER_INT_Init(void)
-     92          // Parameters	: None
-     93          // Return		: None
-     94          // Description	: Initialization interrupts from Intercom (Soft UART)
-     95          //---------------------------------------------------------------------------------
-     96          void INTER_INT_Init(void) {
-     97          	//
-     98          	INTER_REN |= INTER_BIT; 		// PULL enable
-     99          	INTER_OUT |= INTER_BIT;			// PULLUP Resistor 
-    100          	
-    101          	INTER_DIR &= ~INTER_BIT;
-    102          	INTER_IES |= INTER_BIT;  		// прерывание по переходу из 1 в 0, 
-    103                          					// устанавливается соответствующим битом IES.x = 1.
-    104          	INTER_IFG &= ~INTER_BIT; 		// Для предотвращения немедленного срабатывания прерывания,
-    105                          					// обнуляем его флаг для P1.3 до разрешения прерываний
-    106          	INTER_IE  |= INTER_BIT;   		// Разрешаем прерывания для P1.3
-    107          }
-    108          
+     67          
+     68          //--------------------------------------------------------------------------------
+     69          // Function		: __interrupt void PORT2_ISR(void)
+     70          // Parameters	: None
+     71          // Return		: None
+     72          // Description	: GPIO Interrupt routine for RF Button Press 
+     73          //--------------------------------------------------------------------------------
+     74          #pragma vector=PORT2_VECTOR
+     75          __interrupt void PORT2_ISR(void) {   
+     76          	
+     77          	//
+     78          	if ((INTER_IE & INTER_BIT) && (INTER_IFG & INTER_BIT)) {
+     79          		INTER_IFG &= ~INTER_BIT;    			// Обнуляем флаг прерывания
+     80                  //
+     81          		BCSCTL1 = CALBC1_8MHZ; 					// Используем частоту 8 MГц
+     82          		DCOCTL =  CALDCO_8MHZ;
+     83          		//
+     84          		fRxLineDownOn = 1;
+     85          		//
+     86          		//__bic_SR_register_on_exit(LPM3_bits);   // Clear LPM3 bits from 0(SR) Просыпаемся
+     87          		
+     88          	}
+     89          }
+     90          
+     91          //---------------------------------------------------------------------------------
+     92          // Function		: void INTER_INT_Init(void)
+     93          // Parameters	: None
+     94          // Return		: None
+     95          // Description	: Initialization interrupts from Intercom (Soft UART)
+     96          //---------------------------------------------------------------------------------
+     97          void INTER_INT_Init(void) {
+     98          	//
+     99          	INTER_REN |= INTER_BIT; 		// PULL enable
+    100          	INTER_OUT |= INTER_BIT;			// PULLUP Resistor 
+    101          	
+    102          	INTER_DIR &= ~INTER_BIT;
+    103          	INTER_IES |= INTER_BIT;  		// прерывание по переходу из 1 в 0, 
+    104                          					// устанавливается соответствующим битом IES.x = 1.
+    105          	INTER_IFG &= ~INTER_BIT; 		// Для предотвращения немедленного срабатывания прерывания,
+    106                          					// обнуляем его флаг для P1.3 до разрешения прерываний
+    107          	INTER_IE  |= INTER_BIT;   		// Разрешаем прерывания для P1.3
+    108          }
     109          
-    110          //---------------------------------------------------------------------------------
-    111          // Function		: void GPIO_Init(void)
-    112          // Parameters	: None
-    113          // Return		: None
-    114          // Description	: Initialization GPIO 
-    115          //---------------------------------------------------------------------------------
-    116          void GPIO_Init(void) {
-    117          
-    118          	P1OUT = 0;	
-    119          	P2OUT = 0;
-    120          	
-    121          	RED_DIR 		|= RED_BIT;
-    122          	YEL_DIR 		|= YEL_BIT;
-    123          	
-    124          
-    125          	P1SEL = 0;
-    126          	P2SEL = 0;
-    127          	
-    128          	INTER_INT_Init();				// Init interrupts from Intercom
-    129          }
-    130          
-    131          // End hardware.c
+    110          
+    111          //---------------------------------------------------------------------------------
+    112          // Function		: void GPIO_Init(void)
+    113          // Parameters	: None
+    114          // Return		: None
+    115          // Description	: Initialization GPIO 
+    116          //---------------------------------------------------------------------------------
+    117          void GPIO_Init(void) {
+    118          
+    119          	P1OUT = 0;	
+    120          	P2OUT = 0;
+    121          	
+    122          	RED_DIR 		|= RED_BIT;
+    123          	YEL_DIR 		|= YEL_BIT;
+    124          	
+    125          	
+    126          
+    127          	P1SEL = 0;
+    128          	P2SEL = 0;
+    129          	
+    130          	INTER_INT_Init();				// Init interrupts from Intercom
+    131          }
+    132          
+    133          // End hardware.c
 
    Maximum stack usage in bytes:
 
@@ -180,8 +182,6 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\hardware.c
       30  GPIO_Init
        0  INTER_INT_Init
        1  P1DIR
-       1  P1IES
-       1  P1IFG
        1  P1OUT
        1  P1SEL
        1  P2DIR
@@ -191,19 +191,19 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\hardware.c
        1  P2OUT
        1  P2REN
        1  P2SEL
-      40  PORT1_ISR
+       2  PORT1_ISR
        2  PORT1_ISR::??INTVEC 4
       36  PORT2_ISR
        2  PORT2_ISR::??INTVEC 6
 
  
- 144 bytes in segment CODE
-  16 bytes in segment DATA16_AN
+ 106 bytes in segment CODE
+  14 bytes in segment DATA16_AN
    4 bytes in segment INTVEC
  
- 144 bytes of CODE  memory
+ 106 bytes of CODE  memory
    0 bytes of CONST memory (+  4 bytes shared)
-   0 bytes of DATA  memory (+ 16 bytes shared)
+   0 bytes of DATA  memory (+ 14 bytes shared)
 
 Errors: none
 Warnings: none

@@ -46,7 +46,7 @@ extern __regvar __no_init tFlags 	f 	 @ __R4;
 //--------------------------------------------------------------------------------
 #pragma vector=PORT1_VECTOR
 __interrupt void PORT1_ISR(void) {   
-	//
+	/*
 	if (BUT_IFG & BUT_BIT) {
 		BUT_IFG &= ~BUT_BIT;    		// Обнуляем флаг прерывания
         //
@@ -60,6 +60,7 @@ __interrupt void PORT1_ISR(void) {
 		//
 		__bic_SR_register_on_exit(LPM3_bits);               // Clear LPM3 bits from 0(SR) Просыпаемся
 	}
+	*/
 }
 
 

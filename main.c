@@ -328,11 +328,8 @@ void LedValueManager(void) {
 // Description	: Main function. Contains main loop.
 //--------------------------------------------------------------------------------
 void main(void) {
-//	u8	led_clk;
-//	u16	led_timer = 0;
-	u8	timerA1_blank = 0;
-	
-	
+	u8	led_clk;
+	u16	led_timer = 0;
 	// Initialization variables and GPIO
 	
 	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
@@ -344,7 +341,7 @@ void main(void) {
 	BCSCTL1 = CALBC1_1MHZ; 					// »спользуем частоту 1 M√ц
 	DCOCTL =  CALDCO_1MHZ;
 	
-	//!!!DelayMs(500);
+	DelayMs(500);
 	
 	// Initialization code for VLO
 	__set_R4_register(0);
@@ -369,7 +366,7 @@ void main(void) {
 	DeviceMode = MODE_NORM;
 	
 	//!!!!
-	TEST2_DIR |= TEST2_BIT;
+//	TEST2_DIR |= TEST2_BIT;
 
 	DelayMs(1000);
 	
@@ -449,7 +446,7 @@ void main(void) {
 				}
 			}
 
-			
+	/*		
 			if (timerA1_blank) {
 				timerA1_blank--;
 			}else{
@@ -478,7 +475,7 @@ void main(void) {
 
 			} // End indication
 			//
-
+*/
 			
 		} // if (fTimer50msOn)
 
