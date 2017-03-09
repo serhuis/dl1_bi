@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  15:34:31
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           09/Mar/2017  18:11:17
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -10,22 +10,22 @@
 #    __reg_r5      =  free
 #    __pic         =  no
 #    __core        =  430
-#    Source file   =  E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\delay.c
+#    Source file   =  E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\delay.c
 #    Command line  =  
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\delay.c -lcN
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\List -o
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\Obj --debug
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\delay.c -lcN
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List -o
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --debug
 #        -D__MSP430G2332__ -e --double=32 --regvar_r4 --dlib_config "C:\Program
 #        Files (x86)\IAR Systems\Embedded Workbench 7.3\430\lib\dlib\dl430fn.h"
 #        -I ..\RF\ -I RF\ -Oh
 #    List file     =  
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\List\delay.lst
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List\delay.lst
 #    Object file   =  
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\IAR\Debug\Obj\delay.r43
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj\delay.r43
 #
 ###############################################################################
 
-E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\current\delay.c
+E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\delay.c
       1          /**********************************************************************************
       2           *
       3           *      Delays routine

@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  16:05:05
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           09/Mar/2017  18:11:17
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -14,10 +14,11 @@
 #    Command line  =  
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\flash.c -lcN
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List -o
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --debug
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
 #        -D__MSP430G2332__ -e --double=32 --regvar_r4 --dlib_config "C:\Program
 #        Files (x86)\IAR Systems\Embedded Workbench 7.3\430\lib\dlib\dl430fn.h"
-#        -I ..\ -I .\ -Oh
+#        -I ..\ -I .\ -On
 #    List file     =  
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List\flash.lst
 #    Object file   =  
@@ -321,35 +322,32 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\flash.c
    ------ --------
       2   FlashDeInit
       2   FlashEraseSegment
-      2   FlashEraseSegmentSafe
-        0   -> FlashEraseSegment
-        2   -> memcpy
-      0   FlashInit
-     12   FlashWriteArray
-       12   -> memcpy
-       12 ?Epilogue5
+      4   FlashEraseSegmentSafe
+        4   -> FlashEraseSegment
+        4   -> memcpy
+      2   FlashInit
+      8   FlashWriteArray
+        8   -> memcpy
+        8 ?Epilogue3
       2   FlashWriteByte
-      2   FlashWriteSegmentSafe
-        0   -> FlashWriteArray
+      4   FlashWriteSegmentSafe
+        4   -> FlashWriteArray
       2   FlashWriteWord
       2   GetPropertiesCS
       4   SavePropertyCS
-        6   -> FlashEraseSegment
-        6   -> FlashWriteArray
         4   -> GetPropertiesCS
-        6   -> memcpy
+        4   -> StorageProperty
       8   StorageProperty
-        8   -> FlashEraseSegment
-       10   -> FlashWriteArray
-       10   -> memcpy
+        8   -> FlashDeInit
+        8   -> FlashEraseSegmentSafe
+        8   -> FlashInit
+        8   -> FlashWriteSegmentSafe
         8   -> memcpy
         8 ?Epilogue3
-      4   StoragePropertyByte
-        4   -> StorageProperty
-      6   StoragePropertyWord
-        8   -> FlashEraseSegment
-        8   -> FlashWriteArray
-        8   -> memcpy
+      8   StoragePropertyByte
+        8   -> StorageProperty
+      8   StoragePropertyWord
+        8   -> StorageProperty
 
 
    Segment part sizes:
@@ -357,42 +355,35 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\flash.c
    Bytes  Function/Label
    -----  --------------
        2  ?<Initializer for SegCBackup>
-      20  ?Subroutine0
-      36  ?Subroutine1
-      24  ?Subroutine2
-      12  ?Subroutine3
-      12  ?Subroutine5
-      18  ?Subroutine6
-      14  ?Subroutine7
        2  FCTL1
        2  FCTL2
        2  FCTL3
        4  FlashDeInit
-      26  FlashEraseSegment
-      14  FlashEraseSegmentSafe
-       0  FlashInit
-      60  FlashWriteArray
-      24  FlashWriteByte
-      14  FlashWriteSegmentSafe
-      24  FlashWriteWord
-      24  GetPropertiesCS
-      30  SavePropertyCS
+      48  FlashEraseSegment
+      30  FlashEraseSegmentSafe
+      18  FlashInit
+      84  FlashWriteArray
+      54  FlashWriteByte
+      22  FlashWriteSegmentSafe
+      54  FlashWriteWord
+      28  GetPropertiesCS
+      26  SavePropertyCS
        2  SegCBackup
-      50  StorageProperty
-      18  StoragePropertyByte
-      30  StoragePropertyWord
+      54  StorageProperty
+      32  StoragePropertyByte
+      32  StoragePropertyWord
       40  ee_config
       20  signal_array
 
  
- 454 bytes in segment CODE
+ 486 bytes in segment CODE
   40 bytes in segment DATA16_AC
    6 bytes in segment DATA16_AN
    2 bytes in segment DATA16_I
    2 bytes in segment DATA16_ID
   20 bytes in segment DATA16_Z
  
- 454 bytes of CODE  memory
+ 486 bytes of CODE  memory
    2 bytes of CONST memory (+ 40 bytes shared)
   22 bytes of DATA  memory (+  6 bytes shared)
 

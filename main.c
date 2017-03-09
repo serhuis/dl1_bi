@@ -192,7 +192,7 @@ void main(void) {
 	//WDTCTL = WDT_ADLY_1_9;                   // Interval timer	/* for 5.9 ms */
 	IE1 |= WDTIE;                           // Enable WDT interrupt
 	//
-	fLPM3 = 1;								// Enable LOW power mode
+	//fLPM3 = 1;								// Enable LOW power mode
 	//
 	if (IFG1 & WDTIFG) {
 		// Reset WDT
@@ -204,14 +204,11 @@ void main(void) {
 	//	
 	DeviceMode = MODE_NORM;
 	
-	//!!!!
-//	TEST2_DIR |= TEST2_BIT;
-
 	DelayMs(1000);
 	
-	Led_Flash(5);
+	Led_Flash(10);
 	DelayMs(300);
-	Led_Flash(5);
+	Led_Flash(10);
 	
 	DelayMs(3000);
 	
@@ -262,6 +259,7 @@ void main(void) {
 			fTimer50msOn = 0;
 			//
 			Timer50msCounter = 0;
+			RED_CLR();
 		}
 		
 //-------------------------------------------------------------------------------
@@ -334,16 +332,14 @@ __interrupt void watchdog_timer (void) {
 	if (fTimer50msOn) {
 		if (++Timer50msCounter == 0) {		// > ~ 12sec
 			//!!!WDTCTL = WDTCTL;				// Hardware RESET
+			RED_SET();
 		}
 	}
 	fTimer50msOn = 1;
+
 	
-	__bic_SR_register_on_exit(LPM3_bits);                   // Clear LPM3 bits from 0(SR)
+//	__bic_SR_register_on_exit(LPM3_bits);                   // Clear LPM3 bits from 0(SR)
 }
-
-
-
-
 
 
 
@@ -356,32 +352,10 @@ __interrupt void watchdog_timer (void) {
 //--------------------------------------------------------------------------------
 void Led_Flash(u16 duration) {
 	RED_SET();
+	YEL_SET();
 	DelayMs(duration);
 	RED_CLR();
-}
-
-
-
-
-
-//--------------------------------------------------------------------------------
-// Function		: u16 GetVCC(u8 boost_stop)
-// Parameters	: boost_stop = 1 - if need call BoostStop() after measure
-// Return		: Value in 10mV (for example 250 = 2.50V)
-// Description	: Measurement the voltage VCC
-//--------------------------------------------------------------------------------
-u16 GetVCC(u8 boost_stop) {
-
-        u16 res=0;	
-/*	ADC_Measure(ADC_CH_VCC, 0, VCC_DATA_LEN);
-	//~~~
-	VREF_Off();
-	//
-	//	
-//	res = AverageData(adc_data1, VCC_DATA_LEN);
-	res = res * 64 / 218 + 2;						//~~res = ((u32)res * 301) / 1024 & Compensation dV(R38)=20mV (max=302)
-*/
-	return (res);			
+	YEL_CLR();
 }
 
 //--------------------------------------------------------------------------------

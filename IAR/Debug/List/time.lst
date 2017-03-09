@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  16:16:23
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           09/Mar/2017  18:11:17
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -14,10 +14,11 @@
 #    Command line  =  
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c -lcN
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List -o
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --debug
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
 #        -D__MSP430G2332__ -e --double=32 --regvar_r4 --dlib_config "C:\Program
 #        Files (x86)\IAR Systems\Embedded Workbench 7.3\430\lib\dlib\dl430fn.h"
-#        -I ..\ -I .\ -Oh
+#        -I ..\ -I .\ -On
 #    List file     =  
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List\time.lst
 #    Object file   =  
@@ -227,9 +228,9 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
       2   Timer_A_Off
       2   Timer_A_SetDelay
       2   VLO_GetPeriod
-      2   VLO_TimerCalibr
-        2   -> SavePropertyCS
-        2   -> StoragePropertyWord
+      4   VLO_TimerCalibr
+        4   -> SavePropertyCS
+        4   -> StoragePropertyWord
 
 
    Segment part sizes:
@@ -246,16 +247,16 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
       40  TimerA0_DelayUs
       28  Timer_A0_Init
       14  Timer_A_Off
-      40  Timer_A_SetDelay
+      44  Timer_A_SetDelay
       30  VLO_GetPeriod
-      68  VLO_TimerCalibr
+      80  VLO_TimerCalibr
 
  
- 224 bytes in segment CODE
+ 240 bytes in segment CODE
   10 bytes in segment DATA16_AN
    2 bytes in segment INTVEC
  
- 224 bytes of CODE  memory
+ 240 bytes of CODE  memory
    0 bytes of CONST memory (+  2 bytes shared)
    0 bytes of DATA  memory (+ 10 bytes shared)
 

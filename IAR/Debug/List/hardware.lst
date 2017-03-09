@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           07/Mar/2017  16:36:29
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           09/Mar/2017  18:11:17
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -14,10 +14,11 @@
 #    Command line  =  
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c -lcN
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List -o
-#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --debug
+#        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\Obj --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
 #        -D__MSP430G2332__ -e --double=32 --regvar_r4 --dlib_config "C:\Program
 #        Files (x86)\IAR Systems\Embedded Workbench 7.3\430\lib\dlib\dl430fn.h"
-#        -I ..\ -I .\ -Oh
+#        -I ..\ -I .\ -On
 #    List file     =  
 #        E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\List\hardware.lst
 #    Object file   =  
@@ -171,7 +172,8 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
    CSTACK Function
    ------ --------
       2   GPIO_Init
-      0   INTER_INT_Init
+        0   -> INTER_INT_Init
+      2   INTER_INT_Init
       4   PORT1_ISR
       4   PORT2_ISR
 
@@ -180,13 +182,12 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
 
    Bytes  Function/Label
    -----  --------------
-      38  ?Subroutine0
        1  BCSCTL1
        1  CALBC1_8MHZ
        1  CALDCO_8MHZ
        1  DCOCTL
-      50  GPIO_Init
-       0  INTER_INT_Init
+      52  GPIO_Init
+      38  INTER_INT_Init
        1  P1DIR
        1  P1OUT
        1  P1SEL
@@ -203,11 +204,11 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        2  PORT2_ISR::??INTVEC 6
 
  
- 126 bytes in segment CODE
+ 128 bytes in segment CODE
   14 bytes in segment DATA16_AN
    4 bytes in segment INTVEC
  
- 126 bytes of CODE  memory
+ 128 bytes of CODE  memory
    0 bytes of CONST memory (+  4 bytes shared)
    0 bytes of DATA  memory (+ 14 bytes shared)
 
