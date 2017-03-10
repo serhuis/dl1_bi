@@ -2,7 +2,7 @@
 #                                                                              #
 #      IAR Universal Linker V6.3.4.78                                          #
 #                                                                              #
-#           Link time     =  09/Mar/2017  18:13:25                             #
+#           Link time     =  10/Mar/2017  17:43:39                             #
 #           Target CPU    =  MSP430                                            #
 #           List file     =  E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\IAR\Debug\ #
 #                            List\DL1R_BI.map                                  #
@@ -66,7 +66,7 @@
                 *                                      *
                 ****************************************
 
-       Program entry at :           F002  Relocatable, from module : ?cstart
+       Program entry at :           F004  Relocatable, from module : ?cstart
 
 
 
@@ -125,18 +125,18 @@ Absolute parts
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F278 - F297 (0x20 bytes), align: 1
+  Relative segment, address: F260 - F27F (0x20 bytes), align: 1
   Segment part 3.             Intra module refs:   DelayMs
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           DelayUs                 F278 
+           DelayUs                 F260 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F372 - F385 (0x14 bytes), align: 1
+  Relative segment, address: F344 - F357 (0x14 bytes), align: 1
   Segment part 5.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           DelayMs                 F372            Led_Flash (main)
+           DelayMs                 F344            Led_Flash (main)
                                                    main (main)
                calls direct
 
@@ -179,11 +179,11 @@ DATA16_AC
            ee_config               1040 
     -------------------------------------------------------------------------
 DATA16_Z
-  Relative segment, address: 0202 - 0215 (0x14 bytes), align: 1
+  Relative segment, address: 0204 - 0217 (0x14 bytes), align: 1
   Segment part 6.             Intra module refs:   Segment part 8
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           signal_array            0202 
+           signal_array            0204 
     -------------------------------------------------------------------------
 DATA16_I
   Relative segment, address: 0200 - 0201 (0x2 bytes), align: 1
@@ -195,80 +195,80 @@ DATA16_I
            SegCBackup              0200 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F386 - F397 (0x12 bytes), align: 1
+  Relative segment, address: F358 - F369 (0x12 bytes), align: 1
   Segment part 9.             Intra module refs:   StorageProperty
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           FlashInit               F386 
+           FlashInit               F358 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F3F2 - F3F5 (0x4 bytes), align: 1
+  Relative segment, address: F3D0 - F3D3 (0x4 bytes), align: 1
   Segment part 10.            Intra module refs:   StorageProperty
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           FlashDeInit             F3F2 
+           FlashDeInit             F3D0 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F1FE - F22D (0x30 bytes), align: 1
+  Relative segment, address: F1E6 - F215 (0x30 bytes), align: 1
   Segment part 11.            Intra module refs:   FlashEraseSegmentSafe
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           FlashEraseSegment       F1FE 
+           FlashEraseSegment       F1E6 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F0F0 - F143 (0x54 bytes), align: 1
+  Relative segment, address: F0D8 - F12B (0x54 bytes), align: 1
   Segment part 14.            Intra module refs:   FlashWriteSegmentSafe
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           FlashWriteArray         F0F0 
+           FlashWriteArray         F0D8 
                calls direct
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F2B8 - F2D5 (0x1e bytes), align: 1
+  Relative segment, address: F2A0 - F2BD (0x1e bytes), align: 1
   Segment part 15.            Intra module refs:   StorageProperty
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           FlashEraseSegmentSafe   F2B8 
+           FlashEraseSegmentSafe   F2A0 
                calls direct
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F35C - F371 (0x16 bytes), align: 1
+  Relative segment, address: F32E - F343 (0x16 bytes), align: 1
   Segment part 16.            Intra module refs:   StorageProperty
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           FlashWriteSegmentSafe   F35C 
+           FlashWriteSegmentSafe   F32E 
                calls direct
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F194 - F1C9 (0x36 bytes), align: 1
+  Relative segment, address: F17C - F1B1 (0x36 bytes), align: 1
   Segment part 17.            Intra module refs:   SavePropertyCS
                                                    StoragePropertyWord
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           StorageProperty         F194 
+           StorageProperty         F17C 
                calls direct
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F298 - F2B7 (0x20 bytes), align: 1
+  Relative segment, address: F280 - F29F (0x20 bytes), align: 1
   Segment part 19.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           StoragePropertyWord     F298            VLO_TimerCalibr (time)
+           StoragePropertyWord     F280            VLO_TimerCalibr (time)
                calls direct
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F310 - F32B (0x1c bytes), align: 1
+  Relative segment, address: F2F8 - F313 (0x1c bytes), align: 1
   Segment part 20.            Intra module refs:   SavePropertyCS
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           GetPropertiesCS         F310 
+           GetPropertiesCS         F2F8 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F32C - F345 (0x1a bytes), align: 1
+  Relative segment, address: F314 - F32D (0x1a bytes), align: 1
   Segment part 21.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           SavePropertyCS          F32C            VLO_TimerCalibr (time)
+           SavePropertyCS          F314            VLO_TimerCalibr (time)
                calls direct
     -------------------------------------------------------------------------
 DATA16_ID
@@ -303,7 +303,6 @@ DATA16_AN
   Segment part 3. ROOT        Intra module refs:   GPIO_Init
                                                    Led_Flash (main)
                                                    main (main)
-                                                   watchdog_timer (main)
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            P1OUT                   0021 
@@ -390,34 +389,34 @@ DATA16_AN
            CALBC1_8MHZ             10FD 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F3FA - F3FB (0x2 bytes), align: 1
+  Relative segment, address: F3D8 - F3D9 (0x2 bytes), align: 1
   Segment part 18.            Intra module refs:   PORT1_ISR::??INTVEC 4
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           PORT1_ISR               F3FA 
+           PORT1_ISR               F3D8 
                interrupt function
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F254 - F277 (0x24 bytes), align: 1
+  Relative segment, address: F23C - F25F (0x24 bytes), align: 1
   Segment part 19.            Intra module refs:   PORT2_ISR::??INTVEC 6
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           PORT2_ISR               F254 
+           PORT2_ISR               F23C 
                interrupt function
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F22E - F253 (0x26 bytes), align: 1
+  Relative segment, address: F216 - F23B (0x26 bytes), align: 1
   Segment part 20.            Intra module refs:   GPIO_Init
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           INTER_INT_Init          F22E 
+           INTER_INT_Init          F216 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F1CA - F1FD (0x34 bytes), align: 1
+  Relative segment, address: F1B2 - F1E5 (0x34 bytes), align: 1
   Segment part 21.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           GPIO_Init               F1CA            main (main)
+           GPIO_Init               F1B2            main (main)
                calls direct
     -------------------------------------------------------------------------
 INTVEC
@@ -495,94 +494,94 @@ REGVAR_AN
                                                    VLO_TimerCalibr (time)
     -------------------------------------------------------------------------
 DATA16_Z
-  Relative segment, address: 0216 - 0217 (0x2 bytes), align: 1
-  Segment part 14.            Intra module refs:   main
-           ENTRY                   ADDRESS         REF BY
-           =====                   =======         ======
-           timerMain               0216 
-    -------------------------------------------------------------------------
-DATA16_Z
-  Relative segment, address: 021A - 021A (0x1 bytes), align: 0
+  Relative segment, address: 021C - 021C (0x1 bytes), align: 0
   Segment part 16.            Intra module refs:   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           DeviceMode              021A 
+           DeviceMode              021C 
     -------------------------------------------------------------------------
 DATA16_Z
-  Relative segment, address: 021B - 021B (0x1 bytes), align: 0
+  Relative segment, address: 021D - 021D (0x1 bytes), align: 0
   Segment part 17.            Intra module refs:   DeviceStart
                                                    main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           DeviceFault             021B 
+           DeviceFault             021D 
     -------------------------------------------------------------------------
 DATA16_Z
-  Relative segment, address: 021C - 021C (0x1 bytes), align: 0
+  Relative segment, address: 021E - 021E (0x1 bytes), align: 0
   Segment part 19.            Intra module refs:   main
                                                    watchdog_timer
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           Timer50msCounter        021C 
+           Timer50msCounter        021E 
     -------------------------------------------------------------------------
-DATA16_Z
-  Relative segment, address: 021D - 021D (0x1 bytes), align: 0
-  Segment part 23.            Intra module refs:   main
+DATA16_I
+  Relative segment, address: 0202 - 0202 (0x1 bytes), align: 0
+  Segment part 24.            Intra module refs:   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           fTimerA1_On             021D 
+           timerA1_blank           0202 
     -------------------------------------------------------------------------
 DATA16_Z
   Relative segment, address: 0218 - 0219 (0x2 bytes), align: 1
-  Segment part 25.            Intra module refs:   main
+  Segment part 27.            Intra module refs:   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            cfg_reg                 0218 
     -------------------------------------------------------------------------
 DATA16_Z
-  Relative segment, address: 021E - 021E (0x1 bytes), align: 0
-  Segment part 27.            Intra module refs:   ADC10_ISR
+  Relative segment, address: 021F - 021F (0x1 bytes), align: 0
+  Segment part 29.            Intra module refs:   ADC10_ISR
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           adc_process             021E 
+           adc_process             021F 
     -------------------------------------------------------------------------
-<CODE> 1 (was CODE)
-  Relative segment, address: F3DE - F3E5 (0x8 bytes), align: 1
+DATA16_Z
+  Relative segment, address: 021A - 021B (0x2 bytes), align: 1
   Segment part 30.            Intra module refs:   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           DeviceStart             F3DE 
-               calls direct
+           light_timer             021A 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F02A - F0EF (0xc6 bytes), align: 1
-  Segment part 33.
-           ENTRY                   ADDRESS         REF BY
-           =====                   =======         ======
-           main                    F02A            Segment part 18 (?cstart)
-               calls direct
-    -------------------------------------------------------------------------
-<CODE> 1 (was CODE)
-  Relative segment, address: F346 - F35B (0x16 bytes), align: 1
-  Segment part 34.            Intra module refs:   watchdog_timer::??INTVEC 20
-           ENTRY                   ADDRESS         REF BY
-           =====                   =======         ======
-           watchdog_timer          F346 
-               interrupt function
-    -------------------------------------------------------------------------
-<CODE> 1 (was CODE)
-  Relative segment, address: F2D6 - F2F3 (0x1e bytes), align: 1
+  Relative segment, address: F3BC - F3C3 (0x8 bytes), align: 1
   Segment part 32.            Intra module refs:   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           Led_Flash               F2D6 
+           DeviceStart             F3BC 
                calls direct
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F3CC - F3D5 (0xa bytes), align: 1
-  Segment part 35.            Intra module refs:   ADC10_ISR::??INTVEC 10
+  Relative segment, address: F02C - F0D7 (0xac bytes), align: 1
+  Segment part 35.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           ADC10_ISR               F3CC 
+           main                    F02C            Segment part 18 (?cstart)
+               calls direct
+    -------------------------------------------------------------------------
+<CODE> 1 (was CODE)
+  Relative segment, address: F39E - F3A9 (0xc bytes), align: 1
+  Segment part 36.            Intra module refs:   watchdog_timer::??INTVEC 20
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           watchdog_timer          F39E 
+               interrupt function
+    -------------------------------------------------------------------------
+<CODE> 1 (was CODE)
+  Relative segment, address: F2BE - F2DB (0x1e bytes), align: 1
+  Segment part 34.            Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Led_Flash               F2BE 
+               calls direct
+    -------------------------------------------------------------------------
+<CODE> 1 (was CODE)
+  Relative segment, address: F3AA - F3B3 (0xa bytes), align: 1
+  Segment part 37.            Intra module refs:   ADC10_ISR::??INTVEC 10
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ADC10_ISR               F3AA 
                interrupt function
     -------------------------------------------------------------------------
 INTVEC
@@ -600,6 +599,10 @@ INTVEC
            =====                   =======         ======
            watchdog_timer::??INTVEC 20
                                    FFF4 
+    -------------------------------------------------------------------------
+DATA16_ID
+  Relative segment, address: F002 - F002 (0x1 bytes), align: 0
+  Segment part 25.            Intra module refs:   timerA1_blank
 
     *************************************************************************
 
@@ -610,7 +613,7 @@ INTVEC
   ======================
 DATA16_AN
   Relative segment, address: 0160 - 0161 (0x2 bytes), align: 0
-  Segment part 1. ROOT        Intra module refs:   Timer_A0_Init
+  Segment part 1. ROOT        Intra module refs:   SysTimerInit
                                                    VLO_TimerCalibr
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
@@ -618,7 +621,7 @@ DATA16_AN
     -------------------------------------------------------------------------
 DATA16_AN
   Relative segment, address: 0162 - 0163 (0x2 bytes), align: 0
-  Segment part 2. ROOT        Intra module refs:   Timer_A0_Init
+  Segment part 2. ROOT        Intra module refs:   SysTimerInit
                                                    VLO_TimerCalibr
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
@@ -633,40 +636,40 @@ DATA16_AN
     -------------------------------------------------------------------------
 DATA16_AN
   Relative segment, address: 0170 - 0171 (0x2 bytes), align: 0
-  Segment part 4. ROOT        Intra module refs:   Timer_A0_Init
+  Segment part 4. ROOT        Intra module refs:   SysTimerInit
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            TA0R                    0170 
     -------------------------------------------------------------------------
 DATA16_AN
   Relative segment, address: 0172 - 0173 (0x2 bytes), align: 0
-  Segment part 5. ROOT        Intra module refs:   Timer_A0_Init
+  Segment part 5. ROOT        Intra module refs:   SysTimerInit
                                                    VLO_TimerCalibr
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            TA0CCR0                 0172 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F144 - F193 (0x50 bytes), align: 1
+  Relative segment, address: F12C - F17B (0x50 bytes), align: 1
   Segment part 8.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           VLO_TimerCalibr         F144            DeviceStart (main)
+           VLO_TimerCalibr         F12C            DeviceStart (main)
                calls direct
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F2F4 - F30F (0x1c bytes), align: 1
-  Segment part 10.
+  Relative segment, address: F2DC - F2F7 (0x1c bytes), align: 1
+  Segment part 9.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           Timer_A0_Init           F2F4            main (main)
+           SysTimerInit            F2DC            main (main)
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F3EA - F3ED (0x4 bytes), align: 1
-  Segment part 12.            Intra module refs:   CCR0_ISR::??INTVEC 18
+  Relative segment, address: F3C8 - F3CB (0x4 bytes), align: 1
+  Segment part 10.            Intra module refs:   CCR0_ISR::??INTVEC 18
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           CCR0_ISR                F3EA 
+           CCR0_ISR                F3C8 
                interrupt function
     -------------------------------------------------------------------------
 INTVEC
@@ -684,11 +687,11 @@ INTVEC
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F3FC - F3FD (0x2 bytes), align: 1
+  Relative segment, address: F3DA - F3DB (0x2 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __DebugBreak            F3FC            __exit (?__exit)
+           __DebugBreak            F3DA            __exit (?__exit)
 
     -------------------------------------------------------------------------
   LIBRARY MODULE, NAME : ?__exit
@@ -696,11 +699,11 @@ INTVEC
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F3AA - F3BB (0x12 bytes), align: 1
+  Relative segment, address: F37C - F38D (0x12 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __exit                  F3AA            Segment part 6 (?_exit)
+           __exit                  F37C            Segment part 6 (?_exit)
                                                    _exit (?_exit)
                calls direct
 
@@ -710,14 +713,14 @@ INTVEC
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F3E6, align: 1
+  Relative segment, address: F3C4, align: 1
   Segment part 0.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           _exit                   F3E6            exit (?exit)
+           _exit                   F3C4            exit (?exit)
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F3E6 - F3E9 (0x4 bytes), align: 1
+  Relative segment, address: F3C4 - F3C7 (0x4 bytes), align: 1
   Segment part 6.             Intra module refs:   _exit
 
     -------------------------------------------------------------------------
@@ -730,7 +733,7 @@ CSTACK
   Segment part 1.
     -------------------------------------------------------------------------
 DATA16_Z
-  Relative segment, address: 021A, align: 1
+  Relative segment, address: 021C, align: 1
   Segment part 2.
     -------------------------------------------------------------------------
 DATA16_I
@@ -742,42 +745,42 @@ DATA16_ID
   Segment part 4.
     -------------------------------------------------------------------------
 CSTART
-  Relative segment, address: F002 - F005 (0x4 bytes), align: 1
+  Relative segment, address: F004 - F007 (0x4 bytes), align: 1
   Segment part 9.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __program_start         F002            ?reset_vector (?reset_vector)
+           __program_start         F004            ?reset_vector (?reset_vector)
                                                    Absolute parts (?ABS_ENTRY_MOD)
-           ?cstart_begin           F002 
+           ?cstart_begin           F004 
     -------------------------------------------------------------------------
 CSTART
-  Relative segment, address: F006 - F011 (0xc bytes), align: 1
+  Relative segment, address: F008 - F013 (0xc bytes), align: 1
   Segment part 13.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           ?cstart_init_zero       F006            DeviceFault (main)
+           ?cstart_init_zero       F008            DeviceFault (main)
                                                    DeviceMode (main)
                                                    Timer50msCounter (main)
                                                    adc_process (main)
                                                    cfg_reg (main)
-                                                   fTimerA1_On (main)
+                                                   light_timer (main)
                                                    signal_array (flash)
-                                                   timerMain (main)
     -------------------------------------------------------------------------
 CSTART
-  Relative segment, address: F012 - F021 (0x10 bytes), align: 1
+  Relative segment, address: F014 - F023 (0x10 bytes), align: 1
   Segment part 14.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           ?cstart_init_copy       F012            SegCBackup (flash)
+           ?cstart_init_copy       F014            SegCBackup (flash)
+                                                   timerA1_blank (main)
     -------------------------------------------------------------------------
 CSTART
-  Relative segment, address: F022 - F029 (0x8 bytes), align: 1
+  Relative segment, address: F024 - F02B (0x8 bytes), align: 1
   Segment part 18.            Intra module refs:   Segment part 9
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           ?cstart_call_main       F022 
-           ?cstart_end             F02A 
+           ?cstart_call_main       F024 
+           ?cstart_end             F02C 
 
     -------------------------------------------------------------------------
   LIBRARY MODULE, NAME : ?reset_vector
@@ -797,11 +800,11 @@ RESET
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F3D6 - F3DD (0x8 bytes), align: 1
+  Relative segment, address: F3B4 - F3BB (0x8 bytes), align: 1
   Segment part 5.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           ?Epilogue3              F3D6            FlashWriteArray (flash)
+           ?Epilogue3              F3B4            FlashWriteArray (flash)
                                                    StorageProperty (flash)
 
     -------------------------------------------------------------------------
@@ -810,11 +813,11 @@ RESET
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F3EE - F3F1 (0x4 bytes), align: 1
+  Relative segment, address: F3CC - F3CF (0x4 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           exit                    F3EE            Segment part 18 (?cstart)
+           exit                    F3CC            Segment part 18 (?cstart)
                calls direct
 
     -------------------------------------------------------------------------
@@ -823,11 +826,11 @@ RESET
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F398 - F3A9 (0x12 bytes), align: 1
+  Relative segment, address: F36A - F37B (0x12 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           memcpy                  F398            FlashEraseSegmentSafe (flash)
+           memcpy                  F36A            FlashEraseSegmentSafe (flash)
                                                    FlashWriteArray (flash)
                                                    StorageProperty (flash)
                                                    __data16_memcpy (?memzero)
@@ -838,18 +841,18 @@ RESET
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: F3BC - F3CB (0x10 bytes), align: 1
+  Relative segment, address: F38E - F39D (0x10 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __data16_memzero        F3BC            ?cstart_init_zero (?cstart)
+           __data16_memzero        F38E            ?cstart_init_zero (?cstart)
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: F3F6 - F3F9 (0x4 bytes), align: 1
+  Relative segment, address: F3D4 - F3D7 (0x4 bytes), align: 1
   Segment part 3.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __data16_memcpy         F3F6            ?cstart_init_copy (?cstart)
+           __data16_memcpy         F3D4            ?cstart_init_copy (?cstart)
                calls direct
 
 
@@ -867,7 +870,7 @@ RESET
 
 
 Program entry
-  "__program_start": 0x0000f002
+  "__program_start": 0x0000f004
 
   Maximum call chain                               42  bytes
 
@@ -882,35 +885,35 @@ Program entry
     "?Epilogue3"                                    8
 
 interrupt
-  "PORT1_ISR": 0x0000f3fa
+  "PORT1_ISR": 0x0000f3d8
 
   Maximum call chain                                4  bytes
 
     "PORT1_ISR"                                     4
 
 interrupt
-  "PORT2_ISR": 0x0000f254
+  "PORT2_ISR": 0x0000f23c
 
   Maximum call chain                                4  bytes
 
     "PORT2_ISR"                                     4
 
 interrupt
-  "watchdog_timer": 0x0000f346
+  "watchdog_timer": 0x0000f39e
 
   Maximum call chain                                4  bytes
 
     "watchdog_timer"                                4
 
 interrupt
-  "ADC10_ISR": 0x0000f3cc
+  "ADC10_ISR": 0x0000f3aa
 
   Maximum call chain                                4  bytes
 
     "ADC10_ISR"                                     4
 
 interrupt
-  "CCR0_ISR": 0x0000f3ea
+  "CCR0_ISR": 0x0000f3c8
 
   Maximum call chain                                4  bytes
 
@@ -939,15 +942,15 @@ DATA16_AN                              0000 - 0000               1   rel    0
                                        0128 - 012D               6 
                                        0160 - 0165               6 
                                        0170 - 0173               4 
-DATA16_I                               0200 - 0201               2   rel    1
-DATA16_Z                               0202 - 021E              1D   rel    1
+DATA16_I                               0200 - 0202               3   rel    1
+DATA16_Z                               0204 - 021F              1C   rel    1
 CSTACK                                 029C - 02FF              64   rel    1
 DATA16_AC                              1040 - 1067              28   rel    0
 DATA16_AN                              10FC - 10FF               4   rel    0
 DATA16_C                                  F000                       dse    0
-DATA16_ID                              F000 - F001               2   rel    1
-CSTART                                 F002 - F029              28   rel    1
-<CODE> 1                               F02A - F3FD             3D4   rel    1
+DATA16_ID                              F000 - F002               3   rel    1
+CSTART                                 F004 - F02B              28   rel    1
+<CODE> 1                               F02C - F3DB             3B0   rel    1
 INTVEC                                 FFE0 - FFF5              16   com    1
 RESET                                  FFFE - FFFF               2   rel    1
 REGVAR_AN            REGISTER          0008 - 0009               2   rel    0
@@ -958,10 +961,10 @@ REGVAR_AN            REGISTER          0008 - 0009               2   rel    0
                 *                                      *
                 ****************************************
 
- 1 044 bytes of CODE     memory
+ 1 008 bytes of CODE     memory
    131 bytes of DATA     memory (+ 37 absolute )
      0 bytes of REGISTER memory (+  2 absolute )
-     2 bytes of CONST    memory (+ 40 absolute )
+     3 bytes of CONST    memory (+ 40 absolute )
 
 Errors: none
 Warnings: none

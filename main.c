@@ -73,6 +73,7 @@ volatile u32	led_y;
 volatile u32	led_sh = 0;
 
 u8 		fTimerA1_On = 0;
+u8 		timerA1_blank = 4;
 
 //const u8 fault_sequence[4 * 2] = {MODE_FAULT, 10, MODE_NORM, 5, MODE_FIRE, 0, 0};	// 0 = ~~
 
@@ -167,33 +168,31 @@ void LedValueManager(void) {
 // Description	: Main function. Contains main loop.
 //--------------------------------------------------------------------------------
 void main(void) {
-	u8	led_clk;
-	u16	led_timer = 0;
+//	u8	led_clk;
+//	u16	led_timer = 0;
 	// Initialization variables and GPIO
 	
 	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
 
-	// GIPIO Init
-	GPIO_Init();
+	GPIO_Init();										// GIPIO Init
 		
-	// Init internal RC osc.
-	BCSCTL1 = CALBC1_1MHZ; 					// Используем частоту 1 MГц
-	DCOCTL =  CALDCO_1MHZ;
-	
-	DelayMs(500);
+
+	BCSCTL1 = CALBC1_1MHZ; 						// Init internal RC osc.
+	DCOCTL =  CALDCO_1MHZ;						// Используем частоту 1 MГц
+
+	__set_R4_register(0);							
 	
 	// Initialization code for VLO
-	__set_R4_register(0);
-	//
-	BCSCTL3 |= LFXT1S_2;                    // Select VLO as low freq clock
+		BCSCTL3 |= LFXT1S_2;                    // Select VLO for low freq clock, capacitor off
 	// End initialization code
 	
-	WDTCTL = WDT_ADLY_250;                   // Interval timer	/* for 50 ms */
-	//WDTCTL = WDT_ADLY_1_9;                   // Interval timer	/* for 5.9 ms */
-	IE1 |= WDTIE;                           // Enable WDT interrupt
+	
+	WDTCTL = WDT_ADLY_250;                   	// Interval timer	/* for 50 ms */
+	IE1 |= WDTIE;                           	// Enable WDT interrupt
 	//
 	//fLPM3 = 1;								// Enable LOW power mode
 	//
+	
 	if (IFG1 & WDTIFG) {
 		// Reset WDT
 		#if (SYS_FAULT_ENABLE == 1)
@@ -213,11 +212,11 @@ void main(void) {
 	DelayMs(3000);
 	
 	_BIS_SR(GIE);    					// Interrupt enable
-	DeviceStart();
+	DeviceStart();						// Calibration VLO Timer
 
 	cfg_reg = CONFIG->config_reg;
 	
-	Timer_A0_Init();
+	SysTimerInit();
 	
 	
 // *****************************************************************
@@ -233,9 +232,10 @@ void main(void) {
 //-------------------------------------------------------------------------------
 // TimerA0 Event		
 //-------------------------------------------------------------------------------
+/*
 		if (fTimerA_On) {				// Получен следующий интервал timer
 			fTimerA_On = 0;
-/*			
+			
 			BCSCTL1 = CALBC1_16MHZ; 					// Используем частоту 8 MГц
 			DCOCTL =  CALDCO_16MHZ;
 			//
@@ -249,9 +249,9 @@ void main(void) {
 			//TEST2_CLR();
 			
 			timerA1_blank = 4;
-*/			
+			
 		}
-
+*/
 //-------------------------------------------------------------------------------
 // fTimer50msOn Event				
 //-------------------------------------------------------------------------------
@@ -259,19 +259,20 @@ void main(void) {
 			fTimer50msOn = 0;
 			//
 			Timer50msCounter = 0;
-			RED_CLR();
+
 		}
 		
 //-------------------------------------------------------------------------------
 // TimerA1 Event (SysTick)
 //-------------------------------------------------------------------------------
-		if (fTimerA1_On) {				// Получен следующий интервал timer
-			fTimerA1_On = 0;
+		if (fTimerA_On) {				// Получен следующий интервал timer
+			fTimerA_On = 0;
 			
 			//TEST2_CLR();
 			//TEST2_OUT ^= TEST2_BIT;
 			
 			//
+/*
 			if (timerMain) {
 				timerMain--;
 				if (timerMain == 1) {
@@ -282,8 +283,8 @@ void main(void) {
 					}
 				}
 			}
-
-	/*		
+*/
+			
 			if (timerA1_blank) {
 				timerA1_blank--;
 			}else{
@@ -291,7 +292,9 @@ void main(void) {
 				// Indication
 				//
 				if (light_timer) {
-					if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_PREFIRE)) {
+//						RED_SET();
+			/*
+			if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_PREFIRE)) {
 						RED_SET();
 						YEL_CLR();
 					}else
@@ -300,19 +303,18 @@ void main(void) {
 						RED_SET();
 						YEL_SET();
 					}
-					//
+*/
 					light_timer--;
 				}else{
 					//
-					if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_CALIBR) || (DeviceMode == MODE_PREFIRE)) {
+//					if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_CALIBR) || (DeviceMode == MODE_PREFIRE)) {
 						RED_CLR();
 						YEL_CLR();
 					}
 				}
 
-			} // End indication
+//			} // End indication
 			//
-*/
 			
 		} // if (fTimer50msOn)
 
@@ -332,7 +334,6 @@ __interrupt void watchdog_timer (void) {
 	if (fTimer50msOn) {
 		if (++Timer50msCounter == 0) {		// > ~ 12sec
 			//!!!WDTCTL = WDTCTL;				// Hardware RESET
-			RED_SET();
 		}
 	}
 	fTimer50msOn = 1;

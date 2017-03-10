@@ -60,7 +60,6 @@ void DelayUs(unsigned short us) {
 	}
 }
 
-
 #pragma optimize=none
 void Delay30Us(void) {
 		asm("nop");

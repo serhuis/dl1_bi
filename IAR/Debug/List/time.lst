@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           09/Mar/2017  18:11:17
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           10/Mar/2017  17:23:07
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -64,170 +64,70 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
      35          			break;
      36          		}
      37          	}
-     38          	//
-     39          	//SoundStop();							// Disable interrupts of timer
-     40          	TACTL = 0;  
-     41          	TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
-     42          	//
-     43          	if (clk != CONFIG->timer_calibr) {
-     44          		StoragePropertyWord(eeTIMER_CALIBR_OFFSET, clk * 2);
-     45          		#if (CRC_ENABLE == 1)
-     46          		SavePropertyCS();
-     47          		#endif
-     48          	}
-     49          	//
-     50          }
-     51          
-     52          
-     53          
-     54          
-     55          //--------------------------------------------------------------------------------
-     56          // Function		: void VLO_TimerCalibr(void)
-     57          // Parameters	: None
-     58          // Return		: None
-     59          // Description	: Calculation calibration value of VLO timer
-     60          //--------------------------------------------------------------------------------
-     61          u16 VLO_GetPeriod(void) {
-     62          	
-     63          	// Start timer 8MHz
-     64          	TACTL = TASSEL_2 + MC_1;           	 	// SMCLK, up mode
-     65          	//			
-     66          	CCR0 =0xFFFF;                    		// Period 2.5mS
-     67          	CCTL1 = 0; 			                    // CCR1 reset/set
-     68          	TACCTL0 = 0;							// Разрешаем прерывание таймера по достижению значения TACCCR0.
-     69          	//
-     70          	while (fTimer50msOn == 0) {}
-     71          	fTimer50msOn = 0;
-     72          	//while (fTimer50msOn == 0) {}
-     73          	
-     74          	return TAR;
-     75          	
-     76          }
-     77          
-     78          
-     79          //--------------------------------------------------------------------------------
-     80          // Function		: void Timer_A0_Init(void)
-     81          // Parameters	: period in us (1..65535) - for 1 MHz DCO
-     82          // Return		: None
-     83          // Description	: Function initiates delay
-     84          //--------------------------------------------------------------------------------
-     85          void Timer_A0_Init(void) {
-     86          	_BIC_SR(GIE);    					// Запрещаем прерывания
-     87          	//
-     88          
-     89          //	fLPM3 = 0;							// Выключаем режим энергосбережения	
-     90          	//
-     91          	TA0R = 0;
-     92          	TA0CTL 	 = TASSEL_2 + MC_1 + ID_0;  // SMCLK, up mode, div = 1
-     93          	TA0CCR0  = SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
-     94          	TA0CCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
-     95          	//
-     96          	_BIS_SR(GIE);    					// Разрешаем прерывания
-     97          
-     98          }
-     99          
-    100          //--------------------------------------------------------------------------------
-    101          // Function		: void Timer_A_SetDelay(u16 period)
-    102          // Parameters	: period in us (1..65535) - for 8 MHz DCO
-    103          // Return		: None
-    104          // Description	: Function initiates delay
-    105          //--------------------------------------------------------------------------------
-    106          void Timer_A_SetDelay(u16 period) {
-    107          	
-    108          	if (period == 0) return;
-    109          	
-    110          	_BIC_SR(GIE);    					// Запрещаем прерывания
-    111          	
-    112          	fTimerA_Enable = 1;
-    113          	fTimerA_Repeat = 0;
-    114          	//
-    115          	fLPM3 		= 0;					// Выключаем режим энергосбережения	
-    116          	//
-    117          	TA0R = 0;
-    118          	TACTL 	 = TASSEL_2 + MC_1 + ID_3;  // SMCLK, up mode, div = 8
-    119          	CCR0 	 = period - 1;      		// Period T(us) * F(MHz)
-    120          	TACCTL0 = CCIE;						// Разрешаем прерывание таймера по достижению значения TACCCR0.
-    121          	//
-    122          	_BIS_SR(GIE);    					// Разрешаем прерывания
-    123          }
-    124          
-    125          //--------------------------------------------------------------------------------
-    126          // Function		: __interrupt void CCR0_ISR(void)
-    127          // Parameters	: None
-    128          // Return		: None
-    129          // Description	: TIMER0 Interrupt routine
-    130          //--------------------------------------------------------------------------------
-    131          #pragma vector = TIMER0_A0_VECTOR
-    132          __interrupt void CCR0_ISR(void) {
-    133            fTimerA_On = 1;
-    134          	/*
-    135          	if (fRedLedFlash) {
-    136          		fRedLedFlash = 0;
-    137          		RED_CLR();
-    138          		//
-    139          		fTimerA_Enable = 0;
-    140          		TACTL = 0;  
-    141          		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
-    142          		//
-    143          		return;
-    144          	}
-    145          	*/
-    146          } // CCR0_ISR
-    147          
-    148          
-    149          //--------------------------------------------------------------------------------
-    150          // Function		: void TimerA1_DelayUs(u16 time)
-    151          // Parameters	: period in us (1..32768) - for 1 MHz DCO
-    152          // Return		: None
-    153          // Description	: Function initiates 
-    154          //--------------------------------------------------------------------------------
-    155          #pragma optimize=none
-    156          void TimerA0_DelayUs(u16 time) {
-    157          	_BIC_SR(GIE);    					// Запрещаем прерывания
-    158          	
-    159          	//
-    160          	TA0R = 0;
-    161          	TA0CTL 	 = TASSEL_2 + MC_1;     	// SMCLK, up mode, div = 8
-    162          	TA0CCR0 	 = time - 1 - 35;      	   	// Period T(us) * F(MHz)
-    163          	//
-    164          	_BIS_SR(GIE);    						// Разрешаем прерывания
-    165          	
-    166          	while ((TA0CCTL0 & CCIFG) == 0);
-    167          	
-    168          	TA0CTL 	 = 0;
-    169          	TA0CCTL0 = 0;
-    170          
-    171          }
-    172          
-    173          
-    174          //--------------------------------------------------------------------------------
-    175          // Function		: void SoundStart(u8 snd_ind)
-    176          // Parameters	: period in us (1..32768) - for 16 MHz DCO
-    177          // Return		: None
-    178          // Description	: Function initiates 
-    179          //--------------------------------------------------------------------------------
-    180          void Timer_A_Off(void) {
-    181          	_BIC_SR(GIE);    			// Запрещаем прерывания
-    182          	//
-    183          	TACTL = 0;  
-    184          	TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
-    185          	//
-    186          //	fLPM3 = 1;					// Включаем режим энергосбережения		
-    187          	//
-    188          	_BIS_SR(GIE);    			// Разрешаем прерывания
-    189          
-    190          }
+     38          	TACTL = 0;  
+     39          	TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
+     40          	//
+     41          	if (clk != CONFIG->timer_calibr) {
+     42          		StoragePropertyWord(eeTIMER_CALIBR_OFFSET, clk * 2);
+     43          		#if (CRC_ENABLE == 1)
+     44          		SavePropertyCS();
+     45          		#endif
+     46          	}
+     47          	//
+     48          }
+     49          
+     50          
+     51          //--------------------------------------------------------------------------------
+     52          // Function		: void Timer_A0_Init(void)
+     53          // Parameters	: period in us (1..65535) - for 1 MHz DCO
+     54          // Return		: None
+     55          // Description	: Function initiates delay
+     56          //--------------------------------------------------------------------------------
+     57          void SysTimerInit(void) {
+     58          	_BIC_SR(GIE);    					// Запрещаем прерывания
+     59          	//
+     60          
+     61          //	fLPM3 = 0;							// Выключаем режим энергосбережения	
+     62          	//
+     63          	TA0R = 0;
+     64          	TA0CTL 	 = TASSEL_2 + MC_1 + ID_0;  // SMCLK, up mode, div = 1
+     65          	TA0CCR0  = SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
+     66          	TA0CCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
+     67          	//
+     68          	_BIS_SR(GIE);    					// Разрешаем прерывания
+     69          
+     70          }
+     71          
+     72          //--------------------------------------------------------------------------------
+     73          // Function		: __interrupt void CCR0_ISR(void)
+     74          // Parameters	: None
+     75          // Return		: None
+     76          // Description	: TIMER0 Interrupt routine
+     77          //--------------------------------------------------------------------------------
+     78          #pragma vector = TIMER0_A0_VECTOR
+     79          __interrupt void CCR0_ISR(void) {
+     80            fTimerA_On = 1;
+     81          	/*
+     82          	if (fRedLedFlash) {
+     83          		fRedLedFlash = 0;
+     84          		RED_CLR();
+     85          		//
+     86          		fTimerA_Enable = 0;
+     87          		TACTL = 0;  
+     88          		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
+     89          		//
+     90          		return;
+     91          	}
+     92          	*/
+     93          } // CCR0_ISR
+     94          
 
    Maximum stack usage in bytes:
 
    CSTACK Function
    ------ --------
       4   CCR0_ISR
-      2   TimerA0_DelayUs
-      2   Timer_A0_Init
-      2   Timer_A_Off
-      2   Timer_A_SetDelay
-      2   VLO_GetPeriod
+      2   SysTimerInit
       4   VLO_TimerCalibr
         4   -> SavePropertyCS
         4   -> StoragePropertyWord
@@ -239,24 +139,20 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
    -----  --------------
        4  CCR0_ISR
        2  CCR0_ISR::??INTVEC 18
+      28  SysTimerInit
        2  TA0CCR0
        2  TA0CCTL0
        2  TA0CCTL1
        2  TA0CTL
        2  TA0R
-      40  TimerA0_DelayUs
-      28  Timer_A0_Init
-      14  Timer_A_Off
-      44  Timer_A_SetDelay
-      30  VLO_GetPeriod
       80  VLO_TimerCalibr
 
  
- 240 bytes in segment CODE
+ 112 bytes in segment CODE
   10 bytes in segment DATA16_AN
    2 bytes in segment INTVEC
  
- 240 bytes of CODE  memory
+ 112 bytes of CODE  memory
    0 bytes of CONST memory (+  2 bytes shared)
    0 bytes of DATA  memory (+ 10 bytes shared)
 
