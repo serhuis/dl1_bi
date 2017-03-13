@@ -63,10 +63,16 @@ void SysTimerInit(void) {
 	TA0R = 0;
 	TA0CTL 	 = TASSEL_2 + MC_1 + ID_0;  // SMCLK, up mode, div = 1
 	TA0CCR0  = SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
+	TA0CCR1 = DELAY_1MS;							//for 1 ms delay;
 	TA0CCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
 	//
 	_BIS_SR(GIE);    					// Разрешаем прерывания
 
+}
+
+void T0_delay(void)
+{
+	TA0CCTL1 = CCIE;
 }
 
 //--------------------------------------------------------------------------------
@@ -92,3 +98,20 @@ __interrupt void CCR0_ISR(void) {
 	*/
 } // CCR0_ISR
 
+#pragma vector = TIMER0_A1_VECTOR
+__interrupt void CCR1_ISR(void) {
+  fIrTimerOn = 1;
+	TACCTL1 = 0;
+	/*
+	if (fRedLedFlash) {
+		fRedLedFlash = 0;
+		RED_CLR();
+		//
+		fTimerA_Enable = 0;
+		TACTL = 0;  
+		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
+		//
+		return;
+	}
+	*/
+} // CCR0_ISR

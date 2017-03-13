@@ -96,6 +96,7 @@ __interrupt void PORT2_ISR(void) {
 //---------------------------------------------------------------------------------
 void INTER_INT_Init(void) {
 	//
+	/*
 	INTER_REN |= INTER_BIT; 		// PULL enable
 	INTER_OUT |= INTER_BIT;			// PULLUP Resistor 
 	
@@ -105,6 +106,7 @@ void INTER_INT_Init(void) {
 	INTER_IFG &= ~INTER_BIT; 		// ƒл€ предотвращени€ немедленного срабатывани€ прерывани€,
                 							// обнул€ем его флаг дл€ P1.3 до разрешени€ прерываний
 	INTER_IE  |= INTER_BIT;   	// –азрешаем прерывани€ дл€ P1.3
+	*/
 }
 
 
@@ -115,16 +117,19 @@ void INTER_INT_Init(void) {
 // Description	: Initialization GPIO 
 //---------------------------------------------------------------------------------
 void GPIO_Init(void) {
+	P1DIR = 0x73;
+	P2DIR = 0xC0;
 
-	P1OUT = 0;	
-	P2OUT = 0;
+	P1OUT = 0x40;	
+	P2OUT = 0x80;
 	
-	RED_DIR 		|= RED_BIT;
-	YEL_DIR 		|= YEL_BIT;
-	IRED_DIR		|= IRED_BIT;
-	LN_SYNC_DIR |= LN_SYNC_BIT;
-	IR_SYNC_DIR |= IR_SYNC_BIT;
-	IR_SYNC_CLR();
+	
+//	RED_DIR 		|= RED_BIT;
+//	YEL_DIR 		|= YEL_BIT;
+//	IRED_DIR		|= IRED_BIT;
+//	LN_SYNC_DIR |= LN_SYNC_BIT;
+//	IR_SYNC_DIR |= IR_SYNC_BIT;
+//	IR_SYNC_CLR();
 	
 	
 	

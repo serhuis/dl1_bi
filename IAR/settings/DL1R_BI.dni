@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=664070206
+Checksum=-393754584
 [CodeCoverage]
 Enabled=_ 0
 [CallStack]
@@ -78,7 +78,8 @@ ShowTimeLog=1
 LiveEnabled=0
 LiveFile=PowerLogLive.log
 [Breakpoints]
-Count=0
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.199.2" 0 0 0 0 "" 0 ""
+Count=1
 [FET]
 Clock mode=39
 Secure Password=

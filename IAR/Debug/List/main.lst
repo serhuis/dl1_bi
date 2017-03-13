@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           10/Mar/2017  17:43:39
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           13/Mar/2017  17:18:05
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -93,372 +93,385 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\main.c
      64          u8 		DeviceMode; 				// Mode of device
      65          
      66          tFault	DeviceFault = {0};			// Current Faults flags
-     67          u16		tempC;						// Current temperature in deg C
-     68          
-     69          u8 		Timer50msCounter = 0;		// Counter of 50ms ticks
-     70          
-     71          volatile u32	led_r;
-     72          volatile u32	led_y;
-     73          volatile u32	led_sh = 0;
-     74          
-     75          u8 		fTimerA1_On = 0;
-     76          u8 		timerA1_blank = 4;
-     77          
-     78          //const u8 fault_sequence[4 * 2] = {MODE_FAULT, 10, MODE_NORM, 5, MODE_FIRE, 0, 0};	// 0 = ~~
-     79          
-     80          u8	reference;
-     81          tCfgReg	cfg_reg;
-     82          
-     83          u8	jp1_state = 0;	// 0 - JP1 Open, 1 - JP1 Close
+     67          
+     68          u8 		Timer50msCounter = 0;		// Counter of 50ms ticks
+     69          /*
+     70          volatile u32	led_r;
+     71          volatile u32	led_y;
+     72          volatile u32	led_sh = 0;
+     73          */
+     74          u8 		fTimerA1_On = 0;
+     75          u8 		timerA1_blank = 0;
+     76          tCfgReg	cfg_reg;
+     77          u8	jp1_state = 0;	// 0 - JP1 Open, 1 - JP1 Close
+     78          
+     79          u8	adc_process = 0;		// ADC low level semafore
+     80          u16	light_timer = 1;	// For led lighting
+     81          
+     82          u8	sync_timer = SYNC_PERIOD;		// For led lighting syncronisation
+     83          u8	ir_timer  = IR_TIMEOUT;
      84          
-     85          u8	adc_process = 0;		// ADC low level semafore
-     86          
-     87          u16	light_timer = 0;	// For led lighting
-     88          
-     89          u8	light_sync = 0;		// For led lighting syncronisation
-     90          
-     91          
-     92          /*********************************************************************************/
-     93          /*                                FUNCTIONS                                      */
-     94          /*********************************************************************************/
-     95          // --- Declarations ---
-     96          
-     97          //u16  AverageData(u16 * data_ptr, u8 len);
-     98          //u8   RX_PacketParser(void);
-     99          //void ADC_Measure(u16 ch, u16 refout, u8 count);
-    100          //void ADC_Measure_TEMP(u16 ch, u16 refout, u8 count);
-    101          
-    102          
-    103          void JP1_Define(void);
-    104          
-    105          
-    106          
-    107          
-    108          //--------------------------------------------------------------------------------
-    109          // Function		: void DeviceStart(void)
-    110          // Parameters	: None
-    111          // Return		: None
-    112          // Description	: Function executes initialization variable at start of device
-    113          //--------------------------------------------------------------------------------
-    114          void DeviceStart(void) {
+     85          /*********************************************************************************/
+     86          /*                                FUNCTIONS                                      */
+     87          /*********************************************************************************/
+     88          // --- Declarations ---
+     89          
+     90          //u16  AverageData(u16 * data_ptr, u8 len);
+     91          //u8   RX_PacketParser(void);
+     92          //void ADC_Measure(u16 ch, u16 refout, u8 count);
+     93          //void ADC_Measure_TEMP(u16 ch, u16 refout, u8 count);
+     94          
+     95          
+     96          void JP1_Define(void);
+     97          
+     98          
+     99          
+    100          
+    101          //--------------------------------------------------------------------------------
+    102          // Function		: void DeviceStart(void)
+    103          // Parameters	: None
+    104          // Return		: None
+    105          // Description	: Function executes initialization variable at start of device
+    106          //--------------------------------------------------------------------------------
+    107          void DeviceStart(void) {
+    108          
+    109          	DeviceFault.byte = 0;		// Reset faults flags
+    110          	//		
+    111          	VLO_TimerCalibr();			// Calibration VLO Timer
+    112          	//
+    113          }
+    114          
     115          
-    116          	DeviceFault.byte = 0;		// Reset faults flags
-    117          	//		
-    118          	VLO_TimerCalibr();			// Calibration VLO Timer
-    119          	//
-    120          }
-    121          
-    122          
-    123          //--------------------------------------------------------------------------------
-    124          // Function		: void LedValueManager(void)
-    125          // Parameters	: None
-    126          // Return		: None
-    127          // Description	: 
-    128          //--------------------------------------------------------------------------------
-    129          void LedValueManager(void) {
-    130            /*
-    131          	if (DeviceFault.byte) {
-    132          		DeviceMode = MODE_FAULT;
-    133          		led_r = 0;
-    134          		
-    135          		if (DeviceFault.fELStrobNone) {
-    136          			// Electrical sync is fault
-    137          			led_y = LED_PULSE_3;
-    138          		}else
-    139          		if (DeviceFault.fSignal_Hi) {
-    140          			// Level signal is big
-    141          			led_y = LED_PULSE_2;
-    142          		}else
-    143          		if (DeviceFault.fSignal_Low) {
-    144          			// Level signal is big
-    145          			led_y = LED_PULSE_1;
-    146          		}else	
-    147          		if (DeviceFault.fFaultDrift) {
-    148          			// Level signal is big
-    149          			led_y = LED_PULSE_4;
-    150          		}
-    151          	}else{
-    152          		if (DeviceMode == MODE_FAULT) {
-    153          			DeviceMode = MODE_NORM;
-    154          			led_r = 0;
-    155          			led_y = 0;
-    156          		}
-    157          	}
-    158            */
-    159          }
-    160          
-    161          //========================================================
-    162          //                 ---  M A I N  ----
-    163          //========================================================
-    164          //--------------------------------------------------------------------------------
-    165          // Function		: void main(void)
-    166          // Parameters	: None
-    167          // Return		: None
-    168          // Description	: Main function. Contains main loop.
-    169          //--------------------------------------------------------------------------------
-    170          void main(void) {
-    171          //	u8	led_clk;
-    172          //	u16	led_timer = 0;
-    173          	// Initialization variables and GPIO
-    174          	
-    175          	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
-    176          
-    177          	GPIO_Init();										// GIPIO Init
-    178          		
-    179          
-    180          	BCSCTL1 = CALBC1_1MHZ; 						// Init internal RC osc.
-    181          	DCOCTL =  CALDCO_1MHZ;						// Используем частоту 1 MГц
-    182          
-    183          	__set_R4_register(0);							
+    116          //--------------------------------------------------------------------------------
+    117          // Function		: void LedValueManager(void)
+    118          // Parameters	: None
+    119          // Return		: None
+    120          // Description	: 
+    121          //--------------------------------------------------------------------------------
+    122          void LedValueManager(void) {
+    123            /*
+    124          	if (DeviceFault.byte) {
+    125          		DeviceMode = MODE_FAULT;
+    126          		led_r = 0;
+    127          		
+    128          		if (DeviceFault.fELStrobNone) {
+    129          			// Electrical sync is fault
+    130          			led_y = LED_PULSE_3;
+    131          		}else
+    132          		if (DeviceFault.fSignal_Hi) {
+    133          			// Level signal is big
+    134          			led_y = LED_PULSE_2;
+    135          		}else
+    136          		if (DeviceFault.fSignal_Low) {
+    137          			// Level signal is big
+    138          			led_y = LED_PULSE_1;
+    139          		}else	
+    140          		if (DeviceFault.fFaultDrift) {
+    141          			// Level signal is big
+    142          			led_y = LED_PULSE_4;
+    143          		}
+    144          	}else{
+    145          		if (DeviceMode == MODE_FAULT) {
+    146          			DeviceMode = MODE_NORM;
+    147          			led_r = 0;
+    148          			led_y = 0;
+    149          		}
+    150          	}
+    151            */
+    152          }
+    153          
+    154          //========================================================
+    155          //                 ---  M A I N  ----
+    156          //========================================================
+    157          //--------------------------------------------------------------------------------
+    158          // Function		: void main(void)
+    159          // Parameters	: None
+    160          // Return		: None
+    161          // Description	: Main function. Contains main loop.
+    162          //--------------------------------------------------------------------------------
+    163          void main(void) {
+    164          	u8	ir_num;
+    165          //	u16	led_timer = 0;
+    166          	// Initialization variables and GPIO
+    167          	
+    168          	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
+    169          
+    170          	BCSCTL1 = CALBC1_1MHZ; 						// Init internal RC osc.
+    171          	DCOCTL =  CALDCO_1MHZ;						// Используем частоту 1 MГц0.
+    172          	__set_R4_register(0);							
+    173          	
+    174          	// Initialization code for VLO
+    175          		BCSCTL3 |= LFXT1S_2;                    // Select VLO for low freq clock, capacitor off
+    176          	// End initialization code
+    177          	
+    178          	
+    179          	WDTCTL = WDT_ADLY_250;                   	// Interval timer	/* for 50 ms */
+    180          	IE1 |= WDTIE;                           	// Enable WDT interrupt
+    181          	//
+    182          	fLPM3 = 1;								// Enable LOW power mode
+    183          	//
     184          	
-    185          	// Initialization code for VLO
-    186          		BCSCTL3 |= LFXT1S_2;                    // Select VLO for low freq clock, capacitor off
-    187          	// End initialization code
-    188          	
-    189          	
-    190          	WDTCTL = WDT_ADLY_250;                   	// Interval timer	/* for 50 ms */
-    191          	IE1 |= WDTIE;                           	// Enable WDT interrupt
-    192          	//
-    193          	//fLPM3 = 1;								// Enable LOW power mode
-    194          	//
-    195          	
-    196          	if (IFG1 & WDTIFG) {
-    197          		// Reset WDT
-    198          		#if (SYS_FAULT_ENABLE == 1)
-    199          		DeviceFault.fFaultSWReset = 1;
-    200          		#endif
-    201          	}
-    202          	IFG1 = 0;
-    203          	//	
-    204          	DeviceMode = MODE_NORM;
-    205          	
-    206          	DelayMs(1000);
-    207          	
-    208          	Led_Flash(10);
-    209          	DelayMs(300);
-    210          	Led_Flash(10);
+    185          
+    186          	
+    187          	if (IFG1 & WDTIFG) {
+    188          		// Reset WDT
+    189          		#if (SYS_FAULT_ENABLE == 1)
+    190          		DeviceFault.fFaultSWReset = 1;
+    191          		#endif
+    192          	}
+    193          	IFG1 = 0;
+    194          	
+    195          	DelayMs(2000);
+    196          	
+    197          	GPIO_Init();										// GIPIO Init
+    198          	
+    199          	Led_Flash(10);
+    200          	DelayMs(300);
+    201          	Led_Flash(10);
+    202          	
+    203          //	DelayMs(6000);
+    204          	
+    205          	_BIS_SR(GIE);    					// Interrupt enable
+    206          	DeviceStart();						// Calibration VLO Timer
+    207          
+    208          	cfg_reg = CONFIG->config_reg;
+    209          	
+    210          	SysTimerInit();
     211          	
-    212          	DelayMs(3000);
-    213          	
-    214          	_BIS_SR(GIE);    					// Interrupt enable
-    215          	DeviceStart();						// Calibration VLO Timer
-    216          
-    217          	cfg_reg = CONFIG->config_reg;
-    218          	
-    219          	SysTimerInit();
-    220          	
-    221          	
-    222          // *****************************************************************
-    223          // ******************   M A I N   L O O P  *************************
-    224          // *****************************************************************
-    225          	while(1) {
-    226          //-------------------------------------------------------------------------------
-    227          		//
-    228          		// ******** Обработчики событий ********
-    229          		//
-    230          //-------------------------------------------------------------------------------
-    231          		
-    232          //-------------------------------------------------------------------------------
-    233          // TimerA0 Event		
-    234          //-------------------------------------------------------------------------------
-    235          /*
-    236          		if (fTimerA_On) {				// Получен следующий интервал timer
-    237          			fTimerA_On = 0;
-    238          			
-    239          			BCSCTL1 = CALBC1_16MHZ; 					// Используем частоту 8 MГц
-    240          			DCOCTL =  CALDCO_16MHZ;
-    241          			//
-    242          			TA1CCR0  = 16 * SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
-    243          			//
-    244          			
-    245          			_BIC_SR(GIE);    			// Запрещаем прерывания
-    246          			Timer_A_Off();
-    247          			_BIS_SR(GIE);    			// Разрешаем прерывания
-    248          			
-    249          			//TEST2_CLR();
-    250          			
-    251          			timerA1_blank = 4;
-    252          			
-    253          		}
-    254          */
-    255          //-------------------------------------------------------------------------------
-    256          // fTimer50msOn Event				
-    257          //-------------------------------------------------------------------------------
-    258          		if (fTimer50msOn) {		// Получен следующий 50мс интервал
-    259          			fTimer50msOn = 0;
-    260          			//
-    261          			Timer50msCounter = 0;
-    262          
-    263          		}
-    264          		
-    265          //-------------------------------------------------------------------------------
-    266          // TimerA1 Event (SysTick)
-    267          //-------------------------------------------------------------------------------
-    268          		if (fTimerA_On) {				// Получен следующий интервал timer
-    269          			fTimerA_On = 0;
-    270          			
-    271          			//TEST2_CLR();
-    272          			//TEST2_OUT ^= TEST2_BIT;
-    273          			
-    274          			//
-    275          /*
-    276          			if (timerMain) {
-    277          				timerMain--;
-    278          				if (timerMain == 1) {
-    279          					if (DeviceMode == MODE_TEST) {
-    280          						DeviceMode = MODE_NORM;
-    281          						RED_CLR();
-    282          						YEL_CLR();
-    283          					}
-    284          				}
-    285          			}
-    286          */
-    287          			
-    288          			if (timerA1_blank) {
-    289          				timerA1_blank--;
-    290          			}else{
-    291          
-    292          				// Indication
-    293          				//
-    294          				if (light_timer) {
-    295          //						RED_SET();
-    296          			/*
-    297          			if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_PREFIRE)) {
-    298          						RED_SET();
-    299          						YEL_CLR();
-    300          					}else
-    301          					//
-    302          					if (DeviceMode == MODE_CALIBR) {
-    303          						RED_SET();
-    304          						YEL_SET();
-    305          					}
-    306          */
-    307          					light_timer--;
-    308          				}else{
-    309          					//
-    310          //					if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_CALIBR) || (DeviceMode == MODE_PREFIRE)) {
-    311          						RED_CLR();
-    312          						YEL_CLR();
-    313          					}
-    314          				}
-    315          
-    316          //			} // End indication
-    317          			//
-    318          			
-    319          		} // if (fTimer50msOn)
+    212          	
+    213          // *****************************************************************
+    214          // ******************   M A I N   L O O P  *************************
+    215          // *****************************************************************
+    216          	while(1) {
+    217          //-------------------------------------------------------------------------------
+    218          		//
+    219          		// ******** Обработчики событий ********
+    220          		//
+    221          //-------------------------------------------------------------------------------
+    222          		
+    223          //-------------------------------------------------------------------------------
+    224          // old TimerA0 Event		
+    225          //-------------------------------------------------------------------------------
+    226          /*
+    227          		if (fTimerA_On) {				// Получен следующий интервал timer
+    228          			fTimerA_On = 0;
+    229          			
+    230          			BCSCTL1 = CALBC1_16MHZ; 					// Используем частоту 8 MГц
+    231          			DCOCTL =  CALDCO_16MHZ;
+    232          			//
+    233          			TA1CCR0  = 16 * SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
+    234          			//
+    235          			
+    236          			_BIC_SR(GIE);    			// Запрещаем прерывания
+    237          			Timer_A_Off();
+    238          			_BIS_SR(GIE);    			// Разрешаем прерывания
+    239          			
+    240          			//TEST2_CLR();
+    241          			
+    242          			timerA1_blank = 4;
+    243          			
+    244          		}
+    245          */
+    246          //-------------------------------------------------------------------------------
+    247          // fTimer50msOn Event				
+    248          //-------------------------------------------------------------------------------
+    249          		if (fTimer50msOn) {		// Получен следующий 50мс интервал
+    250          			fTimer50msOn = 0;
+    251          			//
+    252          			Timer50msCounter = 0;
+    253          
+    254          		}
+    255          		
+    256          //-------------------------------------------------------------------------------
+    257          // fIrTimerOn Event				
+    258          //-------------------------------------------------------------------------------
+    259          		if(fIrTimerOn)
+    260          			{
+    261          //				if(ir_timer--);
+    262          //				else
+    263          //				{
+    264          
+    265          					fIrTimerOn = 0;
+    266          					for(ir_num = 0; ir_num < IR_PULSES; ir_num++)
+    267          					{
+    268          						IRED_SET();
+    269          //						IR_SYNC_SET();
+    270          						DelayUs(IR_DUTY);
+    271          						IRED_CLR();
+    272          						DelayUs(IR_PAUSE);
+    273          					}
+    274          	//			}
+    275          			}
+    276          		
+    277          		
+    278          		
+    279          //-------------------------------------------------------------------------------
+    280          // TimerA0 SysTick
+    281          //-------------------------------------------------------------------------------
+    282          		
+    283          		if (fTimerA_On) {				// Получен следующий интервал timer
+    284          			fTimerA_On = 0;
+    285          			
+    286          			if(sync_timer--)
+    287          			{
+    288          				fStartPulse = 0;
+    289          			}
+    290          			else
+    291          			{
+    292          				fStartPulse = 1;					//enable sync pulse
+    293          				sync_timer = SYNC_PERIOD;
+    294          			}
+    295          			
+    296          			if(fStartPulse)
+    297          			{
+    298          				fStartPulse =0;
+    299          				
+    300          
+    301          				LN_SYNC_SET();
+    302          //				IR_SYNC_SET();
+    303          				DelayUs(100);
+    304          				LN_SYNC_CLR();
+    305          				IR_SYNC_CLR();
+    306          				
+    307          //				ir_timer  = IR_TIMEOUT;
+    308          				T0_delay();
+    309          //				fIrTimerOn = 1;
+    310          			}
+    311          	
+    312          			
+    313          //	Indication update			
+    314          			RED_CLR();
+    315          			YEL_CLR();			
+    316          			if (timerA1_blank) {
+    317          				timerA1_blank--;
+    318          			}else{
+    319          				timerA1_blank = 100;
     320          
-    321          	} // while(1)
-    322          }
-    323          
-    324          
-    325          //--------------------------------------------------------------------------------
-    326          // Function		: __interrupt void watchdog_timer (void)
-    327          // Parameters	: None
-    328          // Return		: None
-    329          // Description	: WDT Interrupt routine
-    330          //--------------------------------------------------------------------------------
-    331          #pragma vector=WDT_VECTOR
-    332          __interrupt void watchdog_timer (void) {
-    333          	
-    334          	if (fTimer50msOn) {
-    335          		if (++Timer50msCounter == 0) {		// > ~ 12sec
-    336          			//!!!WDTCTL = WDTCTL;				// Hardware RESET
-    337          		}
-    338          	}
-    339          	fTimer50msOn = 1;
-    340          
-    341          	
-    342          //	__bic_SR_register_on_exit(LPM3_bits);                   // Clear LPM3 bits from 0(SR)
-    343          }
-    344          
-    345          
-    346          
-    347          
-    348          //--------------------------------------------------------------------------------
-    349          // Function		: void Led_Flash(u16 duration)
-    350          // Parameters	: duration - duration Red LED flash in ms
-    351          // Return		: None
-    352          // Description	: Flashing red LED
-    353          //--------------------------------------------------------------------------------
-    354          void Led_Flash(u16 duration) {
-    355          	RED_SET();
-    356          	YEL_SET();
-    357          	DelayMs(duration);
-    358          	RED_CLR();
-    359          	YEL_CLR();
-    360          }
-    361          
-    362          //--------------------------------------------------------------------------------
-    363          // Function		: void ADC10_ISR(void)
-    364          // Parameters	: None
-    365          // Return		: None
-    366          // Description	: ADC10 interrupt service routine
-    367          //--------------------------------------------------------------------------------
-    368          #pragma vector=ADC10_VECTOR
-    369          __interrupt void ADC10_ISR(void) {
-    370          
-    371          	//ADC10AE0 &= ~0x0F;                      // Save only VRef Out
-    372          	adc_process = 0;
-    373          	fEndOfSamples = 1;
-    374          	
-    375          	//__bic_SR_register_on_exit(CPUOFF);      // Clear CPUOFF bit from 0(SR)
-    376          	
-    377          }
-    378          
-    379          //--------------------------------------------------------------------------------
-    380          // Function		: void DeviceDiagnostics(void)
-    381          // Parameters	: None
-    382          // Return		: None
-    383          // Description	: Procedure of the diagnostics device
-    384          //--------------------------------------------------------------------------------
-    385          void DeviceDiagnostics(void) {
-    386          	
-    387          	//
-    388          #if (TEMP_DET_ENABLE == 1)
-    389          //	ADC_Measure_TEMP(ADC_CH_TEMP, REFOUT, ADC_CH_DATA_LEN);
-    390          //	tempC = AverageData(adc_data1, ADC_CH_DATA_LEN);
-    391          #endif
-    392          	
-    393          	// Diagnostic BOOST	
-    394          	//
-    395          //	DelayMs(100);
-    396          	//
-    397          	//
-    398          		
-    399          #if (CRC_ENABLE == 1)
-    400          	// Check CS of Memory
-    401          	DeviceFault.fFaultCRC = 0;
-    402          	if (GetPropertiesCS() != CONFIG->CS) {
-    403          		DeviceFault.fFaultCRC = 1;
-    404          	}
-    405          #endif
-    406          }
-    407          
-    408          //--------------------------------------------------------------------------------
-    409          // Function		: void u8 JP1_Define(void)
-    410          // Parameters	: None
-    411          // Return		: 0 - JP1 Open, 1 - JP1 Close
-    412          // Description	: Definition of JP1 state
-    413          //--------------------------------------------------------------------------------
-    414          void JP1_Define(void) {
-    415          /*	u16 buf[4];
-    416          	u16 res;
-    417          	
-    418          	res = ADC_Measure_Simple(ADC_BUT, buf, 4);
-    419          	
-    420          	if (res > 600) return; 
-    421          	if (res > 100) {
-    422          		jp1_state = 0;		// JP1 is Open 
-    423          	}else{
-    424          		jp1_state = 1;		// JP1 is Close
-    425          	}	
-    426          */
-    427                  
-    428          	return;	
-    429          }
-    430          
-    431          
-    432          // End of main.c
+    321          				// Indication
+    322          				//
+    323          				if (light_timer--) {
+    324          						RED_SET();
+    325          				}else{
+    326          					light_timer = 1;
+    327          						RED_CLR();
+    328          						YEL_CLR();
+    329          					}
+    330          				}
+    331          //	end of Indication update
+    332          		}//fTimerA_On
+    333          
+    334          	} // while(1)
+    335          }//main
+    336          
+    337          
+    338          //--------------------------------------------------------------------------------
+    339          // Function		: __interrupt void watchdog_timer (void)
+    340          // Parameters	: None
+    341          // Return		: None
+    342          // Description	: WDT Interrupt routine
+    343          //--------------------------------------------------------------------------------
+    344          #pragma vector=WDT_VECTOR
+    345          __interrupt void watchdog_timer (void) {
+    346          	
+    347          	if (fTimer50msOn) {
+    348          		if (++Timer50msCounter == 0) {		// > ~ 12sec
+    349          			//!!!WDTCTL = WDTCTL;				// Hardware RESET
+    350          		}
+    351          	}
+    352          	fTimer50msOn = 1;
+    353          
+    354          	
+    355          //	__bic_SR_register_on_exit(LPM3_bits);                   // Clear LPM3 bits from 0(SR)
+    356          }
+    357          
+    358          
+    359          
+    360          
+    361          //--------------------------------------------------------------------------------
+    362          // Function		: void Led_Flash(u16 duration)
+    363          // Parameters	: duration - duration Red LED flash in ms
+    364          // Return		: None
+    365          // Description	: Flashing red LED
+    366          //--------------------------------------------------------------------------------
+    367          void Led_Flash(u16 duration) {
+    368          	RED_SET();
+    369          	YEL_SET();
+    370          	DelayMs(duration);
+    371          	RED_CLR();
+    372          	YEL_CLR();
+    373          }
+    374          
+    375          //--------------------------------------------------------------------------------
+    376          // Function		: void ADC10_ISR(void)
+    377          // Parameters	: None
+    378          // Return		: None
+    379          // Description	: ADC10 interrupt service routine
+    380          //--------------------------------------------------------------------------------
+    381          #pragma vector=ADC10_VECTOR
+    382          __interrupt void ADC10_ISR(void) {
+    383          
+    384          	//ADC10AE0 &= ~0x0F;                      // Save only VRef Out
+    385          	//adc_process = 0;
+    386          	//fEndOfSamples = 1;
+    387          	
+    388          	//__bic_SR_register_on_exit(CPUOFF);      // Clear CPUOFF bit from 0(SR)
+    389          	
+    390          }
+    391          
+    392          //--------------------------------------------------------------------------------
+    393          // Function		: void DeviceDiagnostics(void)
+    394          // Parameters	: None
+    395          // Return		: None
+    396          // Description	: Procedure of the diagnostics device
+    397          //--------------------------------------------------------------------------------
+    398          void DeviceDiagnostics(void) {
+    399          	
+    400          	//
+    401          #if (TEMP_DET_ENABLE == 1)
+    402          //	ADC_Measure_TEMP(ADC_CH_TEMP, REFOUT, ADC_CH_DATA_LEN);
+    403          //	tempC = AverageData(adc_data1, ADC_CH_DATA_LEN);
+    404          #endif
+    405          	
+    406          	// Diagnostic BOOST	
+    407          	//
+    408          //	DelayMs(100);
+    409          	//
+    410          	//
+    411          		
+    412          #if (CRC_ENABLE == 1)
+    413          	// Check CS of Memory
+    414          	DeviceFault.fFaultCRC = 0;
+    415          	if (GetPropertiesCS() != CONFIG->CS) {
+    416          		DeviceFault.fFaultCRC = 1;
+    417          	}
+    418          #endif
+    419          }
+    420          
+    421          //--------------------------------------------------------------------------------
+    422          // Function		: void u8 JP1_Define(void)
+    423          // Parameters	: None
+    424          // Return		: 0 - JP1 Open, 1 - JP1 Close
+    425          // Description	: Definition of JP1 state
+    426          //--------------------------------------------------------------------------------
+    427          void JP1_Define(void) {
+    428          /*	u16 buf[4];
+    429          	u16 res;
+    430          	
+    431          	res = ADC_Measure_Simple(ADC_BUT, buf, 4);
+    432          	
+    433          	if (res > 600) return; 
+    434          	if (res > 100) {
+    435          		jp1_state = 0;		// JP1 is Open 
+    436          	}else{
+    437          		jp1_state = 1;		// JP1 is Close
+    438          	}	
+    439          */
+    440                  
+    441          	return;	
+    442          }
+    443          
+    444          
+    445          // End of main.c
 
    Maximum stack usage in bytes:
 
@@ -475,10 +488,12 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\main.c
         4   -> DelayMs
       2   main
         2   -> DelayMs
+        2   -> DelayUs
         2   -> DeviceStart
         2   -> GPIO_Init
         2   -> Led_Flash
         2   -> SysTimerInit
+        2   -> T0_delay
       4   watchdog_timer
 
 
@@ -486,8 +501,10 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\main.c
 
    Bytes  Function/Label
    -----  --------------
-       1  ?<Initializer for timerA1_blank>
-      10  ADC10_ISR
+       1  ?<Initializer for ir_timer>
+       2  ?<Initializer for light_timer>
+       1  ?<Initializer for sync_timer>
+       2  ADC10_ISR
        2  ADC10_ISR::??INTVEC 10
        1  BCSCTL1
        1  BCSCTL3
@@ -504,40 +521,37 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\main.c
        2  LedValueManager
       30  Led_Flash
        1  P1OUT
+       1  P2OUT
        1  Timer50msCounter
        2  WDTCTL
        1  adc_process
        2  cfg_reg
        2  f
        1  fTimerA1_On
+       1  ir_timer
        1  jp1_state
-       4  led_r
-       4  led_sh
-       4  led_y
-       1  light_sync
        2  light_timer
-     172  main
+     334  main
        2  mainPeriodCounter
-       1  reference
-       2  tempC
+       1  sync_timer
        1  timerA1_blank
        2  timerMain
       12  watchdog_timer
        2  watchdog_timer::??INTVEC 20
 
  
- 260 bytes in segment CODE
-  10 bytes in segment DATA16_AN
-   1 byte  in segment DATA16_I
-   1 byte  in segment DATA16_ID
-  30 bytes in segment DATA16_Z
+ 414 bytes in segment CODE
+  11 bytes in segment DATA16_AN
+   4 bytes in segment DATA16_I
+   4 bytes in segment DATA16_ID
+  13 bytes in segment DATA16_Z
    4 bytes in segment INTVEC
    2 bytes in segment REGVAR_AN
  
- 260 bytes of CODE     memory
-   1 byte  of CONST    memory (+  4 bytes shared)
-  31 bytes of DATA     memory (+ 10 bytes shared)
+ 414 bytes of CODE     memory
+   4 bytes of CONST    memory (+  4 bytes shared)
+  17 bytes of DATA     memory (+ 11 bytes shared)
    0 bytes of REGISTER memory (+  2 bytes shared)
 
 Errors: none
-Warnings: none
+Warnings: 1

@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           10/Mar/2017  17:23:06
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           13/Mar/2017  18:09:14
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -125,47 +125,52 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
      96          //---------------------------------------------------------------------------------
      97          void INTER_INT_Init(void) {
      98          	//
-     99          	INTER_REN |= INTER_BIT; 		// PULL enable
-    100          	INTER_OUT |= INTER_BIT;			// PULLUP Resistor 
-    101          	
-    102          	INTER_DIR &= ~INTER_BIT;
-    103          	INTER_IES |= INTER_BIT;  		// прерывание по переходу из 1 в 0, 
-    104                          							// устанавливается соответствующим битом IES.x = 1.
-    105          	INTER_IFG &= ~INTER_BIT; 		// Для предотвращения немедленного срабатывания прерывания,
-    106                          							// обнуляем его флаг для P1.3 до разрешения прерываний
-    107          	INTER_IE  |= INTER_BIT;   	// Разрешаем прерывания для P1.3
-    108          }
-    109          
-    110          
-    111          //---------------------------------------------------------------------------------
-    112          // Function		: void GPIO_Init(void)
-    113          // Parameters	: None
-    114          // Return		: None
-    115          // Description	: Initialization GPIO 
-    116          //---------------------------------------------------------------------------------
-    117          void GPIO_Init(void) {
-    118          
-    119          	P1OUT = 0;	
-    120          	P2OUT = 0;
-    121          	
-    122          	RED_DIR 		|= RED_BIT;
-    123          	YEL_DIR 		|= YEL_BIT;
-    124          	IRED_DIR		|= IRED_BIT;
-    125          	LN_SYNC_DIR |= LN_SYNC_BIT;
-    126          	IR_SYNC_DIR |= IR_SYNC_BIT;
-    127          	IR_SYNC_CLR();
-    128          	
-    129          	
-    130          	
-    131          	
-    132          
-    133          	P1SEL = 0;
-    134          	P2SEL = 0;
+     99          	/*
+    100          	INTER_REN |= INTER_BIT; 		// PULL enable
+    101          	INTER_OUT |= INTER_BIT;			// PULLUP Resistor 
+    102          	
+    103          	INTER_DIR &= ~INTER_BIT;
+    104          	INTER_IES |= INTER_BIT;  		// прерывание по переходу из 1 в 0, 
+    105                          							// устанавливается соответствующим битом IES.x = 1.
+    106          	INTER_IFG &= ~INTER_BIT; 		// Для предотвращения немедленного срабатывания прерывания,
+    107                          							// обнуляем его флаг для P1.3 до разрешения прерываний
+    108          	INTER_IE  |= INTER_BIT;   	// Разрешаем прерывания для P1.3
+    109          	*/
+    110          }
+    111          
+    112          
+    113          //---------------------------------------------------------------------------------
+    114          // Function		: void GPIO_Init(void)
+    115          // Parameters	: None
+    116          // Return		: None
+    117          // Description	: Initialization GPIO 
+    118          //---------------------------------------------------------------------------------
+    119          void GPIO_Init(void) {
+    120          	P1DIR = 0x73;
+    121          	P2DIR = 0xC0;
+    122          
+    123          	P1OUT = 0x40;	
+    124          	P2OUT = 0x80;
+    125          	
+    126          	
+    127          //	RED_DIR 		|= RED_BIT;
+    128          //	YEL_DIR 		|= YEL_BIT;
+    129          //	IRED_DIR		|= IRED_BIT;
+    130          //	LN_SYNC_DIR |= LN_SYNC_BIT;
+    131          //	IR_SYNC_DIR |= IR_SYNC_BIT;
+    132          //	IR_SYNC_CLR();
+    133          	
+    134          	
     135          	
-    136          	INTER_INT_Init();				// Init interrupts from Intercom
-    137          }
-    138          
-    139          // End hardware.c
+    136          	
+    137          
+    138          	P1SEL = 0;
+    139          	P2SEL = 0;
+    140          	
+    141          	INTER_INT_Init();				// Init interrupts from Intercom
+    142          }
+    143          
+    144          // End hardware.c
 
    Maximum stack usage in bytes:
 
@@ -186,17 +191,15 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        1  CALBC1_8MHZ
        1  CALDCO_8MHZ
        1  DCOCTL
-      52  GPIO_Init
-      38  INTER_INT_Init
+      36  GPIO_Init
+       2  INTER_INT_Init
        1  P1DIR
        1  P1OUT
        1  P1SEL
        1  P2DIR
        1  P2IE
-       1  P2IES
        1  P2IFG
        1  P2OUT
-       1  P2REN
        1  P2SEL
        2  PORT1_ISR
        2  PORT1_ISR::??INTVEC 4
@@ -204,13 +207,13 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        2  PORT2_ISR::??INTVEC 6
 
  
- 128 bytes in segment CODE
-  14 bytes in segment DATA16_AN
-   4 bytes in segment INTVEC
+ 76 bytes in segment CODE
+ 12 bytes in segment DATA16_AN
+  4 bytes in segment INTVEC
  
- 128 bytes of CODE  memory
-   0 bytes of CONST memory (+  4 bytes shared)
-   0 bytes of DATA  memory (+ 14 bytes shared)
+ 76 bytes of CODE  memory
+  0 bytes of CONST memory (+  4 bytes shared)
+  0 bytes of DATA  memory (+ 12 bytes shared)
 
 Errors: none
 Warnings: none

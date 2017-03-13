@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           10/Mar/2017  17:23:07
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           13/Mar/2017  17:18:05
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -92,42 +92,67 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
      63          	TA0R = 0;
      64          	TA0CTL 	 = TASSEL_2 + MC_1 + ID_0;  // SMCLK, up mode, div = 1
      65          	TA0CCR0  = SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
-     66          	TA0CCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
-     67          	//
-     68          	_BIS_SR(GIE);    					// Разрешаем прерывания
-     69          
-     70          }
-     71          
-     72          //--------------------------------------------------------------------------------
-     73          // Function		: __interrupt void CCR0_ISR(void)
-     74          // Parameters	: None
-     75          // Return		: None
-     76          // Description	: TIMER0 Interrupt routine
-     77          //--------------------------------------------------------------------------------
-     78          #pragma vector = TIMER0_A0_VECTOR
-     79          __interrupt void CCR0_ISR(void) {
-     80            fTimerA_On = 1;
-     81          	/*
-     82          	if (fRedLedFlash) {
-     83          		fRedLedFlash = 0;
-     84          		RED_CLR();
-     85          		//
-     86          		fTimerA_Enable = 0;
-     87          		TACTL = 0;  
-     88          		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
-     89          		//
-     90          		return;
-     91          	}
-     92          	*/
-     93          } // CCR0_ISR
-     94          
+     66          	TA0CCR1 = DELAY_1MS;							//for 1 ms delay;
+     67          	TA0CCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
+     68          	//
+     69          	_BIS_SR(GIE);    					// Разрешаем прерывания
+     70          
+     71          }
+     72          
+     73          void T0_delay(void)
+     74          {
+     75          	TA0CCTL1 = CCIE;
+     76          }
+     77          
+     78          //--------------------------------------------------------------------------------
+     79          // Function		: __interrupt void CCR0_ISR(void)
+     80          // Parameters	: None
+     81          // Return		: None
+     82          // Description	: TIMER0 Interrupt routine
+     83          //--------------------------------------------------------------------------------
+     84          #pragma vector = TIMER0_A0_VECTOR
+     85          __interrupt void CCR0_ISR(void) {
+     86            fTimerA_On = 1;
+     87          	/*
+     88          	if (fRedLedFlash) {
+     89          		fRedLedFlash = 0;
+     90          		RED_CLR();
+     91          		//
+     92          		fTimerA_Enable = 0;
+     93          		TACTL = 0;  
+     94          		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
+     95          		//
+     96          		return;
+     97          	}
+     98          	*/
+     99          } // CCR0_ISR
+    100          
+    101          #pragma vector = TIMER0_A1_VECTOR
+    102          __interrupt void CCR1_ISR(void) {
+    103            fIrTimerOn = 1;
+    104          	TACCTL1 = 0;
+    105          	/*
+    106          	if (fRedLedFlash) {
+    107          		fRedLedFlash = 0;
+    108          		RED_CLR();
+    109          		//
+    110          		fTimerA_Enable = 0;
+    111          		TACTL = 0;  
+    112          		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
+    113          		//
+    114          		return;
+    115          	}
+    116          	*/
+    117          } // CCR0_ISR
 
    Maximum stack usage in bytes:
 
    CSTACK Function
    ------ --------
       4   CCR0_ISR
+      4   CCR1_ISR
       2   SysTimerInit
+      2   T0_delay
       4   VLO_TimerCalibr
         4   -> SavePropertyCS
         4   -> StoragePropertyWord
@@ -139,8 +164,12 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
    -----  --------------
        4  CCR0_ISR
        2  CCR0_ISR::??INTVEC 18
-      28  SysTimerInit
+      10  CCR1_ISR
+       2  CCR1_ISR::??INTVEC 16
+      34  SysTimerInit
+       8  T0_delay
        2  TA0CCR0
+       2  TA0CCR1
        2  TA0CCTL0
        2  TA0CCTL1
        2  TA0CTL
@@ -148,13 +177,13 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
       80  VLO_TimerCalibr
 
  
- 112 bytes in segment CODE
-  10 bytes in segment DATA16_AN
-   2 bytes in segment INTVEC
+ 136 bytes in segment CODE
+  12 bytes in segment DATA16_AN
+   4 bytes in segment INTVEC
  
- 112 bytes of CODE  memory
-   0 bytes of CONST memory (+  2 bytes shared)
-   0 bytes of DATA  memory (+ 10 bytes shared)
+ 136 bytes of CODE  memory
+   0 bytes of CONST memory (+  4 bytes shared)
+   0 bytes of DATA  memory (+ 12 bytes shared)
 
 Errors: none
 Warnings: none

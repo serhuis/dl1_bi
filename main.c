@@ -64,30 +64,23 @@ u16		mainPeriodCounter;			// Counter of main time period
 u8 		DeviceMode; 				// Mode of device
 
 tFault	DeviceFault = {0};			// Current Faults flags
-u16		tempC;						// Current temperature in deg C
 
 u8 		Timer50msCounter = 0;		// Counter of 50ms ticks
-
+/*
 volatile u32	led_r;
 volatile u32	led_y;
 volatile u32	led_sh = 0;
-
+*/
 u8 		fTimerA1_On = 0;
-u8 		timerA1_blank = 4;
-
-//const u8 fault_sequence[4 * 2] = {MODE_FAULT, 10, MODE_NORM, 5, MODE_FIRE, 0, 0};	// 0 = ~~
-
-u8	reference;
+u8 		timerA1_blank = 0;
 tCfgReg	cfg_reg;
-
 u8	jp1_state = 0;	// 0 - JP1 Open, 1 - JP1 Close
 
 u8	adc_process = 0;		// ADC low level semafore
+u16	light_timer = 1;	// For led lighting
 
-u16	light_timer = 0;	// For led lighting
-
-u8	light_sync = 0;		// For led lighting syncronisation
-
+u8	sync_timer = SYNC_PERIOD;		// For led lighting syncronisation
+u8	ir_timer  = IR_TIMEOUT;
 
 /*********************************************************************************/
 /*                                FUNCTIONS                                      */
@@ -168,18 +161,14 @@ void LedValueManager(void) {
 // Description	: Main function. Contains main loop.
 //--------------------------------------------------------------------------------
 void main(void) {
-//	u8	led_clk;
+	u8	ir_num;
 //	u16	led_timer = 0;
 	// Initialization variables and GPIO
 	
 	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
 
-	GPIO_Init();										// GIPIO Init
-		
-
 	BCSCTL1 = CALBC1_1MHZ; 						// Init internal RC osc.
-	DCOCTL =  CALDCO_1MHZ;						// Используем частоту 1 MГц
-
+	DCOCTL =  CALDCO_1MHZ;						// Используем частоту 1 MГц0.
 	__set_R4_register(0);							
 	
 	// Initialization code for VLO
@@ -190,8 +179,10 @@ void main(void) {
 	WDTCTL = WDT_ADLY_250;                   	// Interval timer	/* for 50 ms */
 	IE1 |= WDTIE;                           	// Enable WDT interrupt
 	//
-	//fLPM3 = 1;								// Enable LOW power mode
+	fLPM3 = 1;								// Enable LOW power mode
 	//
+	
+
 	
 	if (IFG1 & WDTIFG) {
 		// Reset WDT
@@ -200,16 +191,16 @@ void main(void) {
 		#endif
 	}
 	IFG1 = 0;
-	//	
-	DeviceMode = MODE_NORM;
 	
-	DelayMs(1000);
+	DelayMs(2000);
+	
+	GPIO_Init();										// GIPIO Init
 	
 	Led_Flash(10);
 	DelayMs(300);
 	Led_Flash(10);
 	
-	DelayMs(3000);
+//	DelayMs(6000);
 	
 	_BIS_SR(GIE);    					// Interrupt enable
 	DeviceStart();						// Calibration VLO Timer
@@ -230,7 +221,7 @@ void main(void) {
 //-------------------------------------------------------------------------------
 		
 //-------------------------------------------------------------------------------
-// TimerA0 Event		
+// old TimerA0 Event		
 //-------------------------------------------------------------------------------
 /*
 		if (fTimerA_On) {				// Получен следующий интервал timer
@@ -263,63 +254,85 @@ void main(void) {
 		}
 		
 //-------------------------------------------------------------------------------
-// TimerA1 Event (SysTick)
+// fIrTimerOn Event				
 //-------------------------------------------------------------------------------
+		if(fIrTimerOn)
+			{
+//				if(ir_timer--);
+//				else
+//				{
+
+					fIrTimerOn = 0;
+					for(ir_num = 0; ir_num < IR_PULSES; ir_num++)
+					{
+						IRED_SET();
+//						IR_SYNC_SET();
+						DelayUs(IR_DUTY);
+						IRED_CLR();
+						DelayUs(IR_PAUSE);
+					}
+	//			}
+			}
+		
+		
+		
+//-------------------------------------------------------------------------------
+// TimerA0 SysTick
+//-------------------------------------------------------------------------------
+		
 		if (fTimerA_On) {				// Получен следующий интервал timer
 			fTimerA_On = 0;
 			
-			//TEST2_CLR();
-			//TEST2_OUT ^= TEST2_BIT;
-			
-			//
-/*
-			if (timerMain) {
-				timerMain--;
-				if (timerMain == 1) {
-					if (DeviceMode == MODE_TEST) {
-						DeviceMode = MODE_NORM;
-						RED_CLR();
-						YEL_CLR();
-					}
-				}
+			if(sync_timer--)
+			{
+				fStartPulse = 0;
 			}
-*/
+			else
+			{
+				fStartPulse = 1;					//enable sync pulse
+				sync_timer = SYNC_PERIOD;
+			}
 			
+			if(fStartPulse)
+			{
+				fStartPulse =0;
+				
+
+				LN_SYNC_SET();
+//				IR_SYNC_SET();
+				DelayUs(100);
+				LN_SYNC_CLR();
+				IR_SYNC_CLR();
+				
+//				ir_timer  = IR_TIMEOUT;
+				T0_delay();
+//				fIrTimerOn = 1;
+			}
+	
+			
+//	Indication update			
+			RED_CLR();
+			YEL_CLR();			
 			if (timerA1_blank) {
 				timerA1_blank--;
 			}else{
+				timerA1_blank = 100;
 
 				// Indication
 				//
-				if (light_timer) {
-//						RED_SET();
-			/*
-			if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_PREFIRE)) {
+				if (light_timer--) {
 						RED_SET();
-						YEL_CLR();
-					}else
-					//
-					if (DeviceMode == MODE_CALIBR) {
-						RED_SET();
-						YEL_SET();
-					}
-*/
-					light_timer--;
 				}else{
-					//
-//					if ((DeviceMode == MODE_NORM) || (DeviceMode == MODE_CALIBR) || (DeviceMode == MODE_PREFIRE)) {
+					light_timer = 1;
 						RED_CLR();
 						YEL_CLR();
 					}
 				}
-
-//			} // End indication
-			//
-			
-		} // if (fTimer50msOn)
+//	end of Indication update
+		}//fTimerA_On
 
 	} // while(1)
-}
+}//main
 
 
 //--------------------------------------------------------------------------------
@@ -369,8 +382,8 @@ void Led_Flash(u16 duration) {
 __interrupt void ADC10_ISR(void) {
 
 	//ADC10AE0 &= ~0x0F;                      // Save only VRef Out
-	adc_process = 0;
-	fEndOfSamples = 1;
+	//adc_process = 0;
+	//fEndOfSamples = 1;
 	
 	//__bic_SR_register_on_exit(CPUOFF);      // Clear CPUOFF bit from 0(SR)
 	
