@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           13/Mar/2017  18:09:14
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           15/Mar/2017  17:19:47
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -146,31 +146,24 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
     117          // Description	: Initialization GPIO 
     118          //---------------------------------------------------------------------------------
     119          void GPIO_Init(void) {
-    120          	P1DIR = 0x73;
-    121          	P2DIR = 0xC0;
-    122          
-    123          	P1OUT = 0x40;	
-    124          	P2OUT = 0x80;
-    125          	
-    126          	
-    127          //	RED_DIR 		|= RED_BIT;
-    128          //	YEL_DIR 		|= YEL_BIT;
-    129          //	IRED_DIR		|= IRED_BIT;
-    130          //	LN_SYNC_DIR |= LN_SYNC_BIT;
-    131          //	IR_SYNC_DIR |= IR_SYNC_BIT;
-    132          //	IR_SYNC_CLR();
+    120          
+    121          	P1SEL = 0;
+    122          	P2SEL = 0;
+    123          	
+    124          	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT);						// 0x73;
+    125          //	P2DIR |= (INTER_BIT|IRED_BIT);																					// 0xC0;
+    126          		P2DIR = 0;
+    127          	
+    128          	P1REN ^= ~(RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|LN_IN_BIT);					//0x73;
+    129          	P2REN |= (INTER_BIT|IRED_BIT);
+    130          
+    131          	P1OUT = 0x40;	
+    132          	P2OUT = 0x00;
     133          	
-    134          	
-    135          	
-    136          	
-    137          
-    138          	P1SEL = 0;
-    139          	P2SEL = 0;
-    140          	
-    141          	INTER_INT_Init();				// Init interrupts from Intercom
-    142          }
-    143          
-    144          // End hardware.c
+    134          	INTER_INT_Init();				// Init interrupts from Intercom
+    135          }
+    136          
+    137          // End hardware.c
 
    Maximum stack usage in bytes:
 
@@ -191,15 +184,17 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        1  CALBC1_8MHZ
        1  CALDCO_8MHZ
        1  DCOCTL
-      36  GPIO_Init
+      44  GPIO_Init
        2  INTER_INT_Init
        1  P1DIR
        1  P1OUT
+       1  P1REN
        1  P1SEL
        1  P2DIR
        1  P2IE
        1  P2IFG
        1  P2OUT
+       1  P2REN
        1  P2SEL
        2  PORT1_ISR
        2  PORT1_ISR::??INTVEC 4
@@ -207,13 +202,13 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        2  PORT2_ISR::??INTVEC 6
 
  
- 76 bytes in segment CODE
- 12 bytes in segment DATA16_AN
+ 84 bytes in segment CODE
+ 14 bytes in segment DATA16_AN
   4 bytes in segment INTVEC
  
- 76 bytes of CODE  memory
+ 84 bytes of CODE  memory
   0 bytes of CONST memory (+  4 bytes shared)
-  0 bytes of DATA  memory (+ 12 bytes shared)
+  0 bytes of DATA  memory (+ 14 bytes shared)
 
 Errors: none
 Warnings: none

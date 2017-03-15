@@ -42,7 +42,7 @@
 
 #define	SYNC_PERIOD			100 		/* in ticks */
 #define IR_TIMEOUT			1			/**/
-#define	IR_PULSES				8				/*number of IR signal pulses*/
+#define	IR_PULSES				3				/*number of IR signal pulses*/
 #define IR_DUTY					48			/*pulse width of IRED pulse*/
 #define	IR_PAUSE				148			/*pause of IRED pulses*/
 

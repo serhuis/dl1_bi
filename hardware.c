@@ -117,26 +117,19 @@ void INTER_INT_Init(void) {
 // Description	: Initialization GPIO 
 //---------------------------------------------------------------------------------
 void GPIO_Init(void) {
-	P1DIR = 0x73;
-	P2DIR = 0xC0;
-
-	P1OUT = 0x40;	
-	P2OUT = 0x80;
-	
-	
-//	RED_DIR 		|= RED_BIT;
-//	YEL_DIR 		|= YEL_BIT;
-//	IRED_DIR		|= IRED_BIT;
-//	LN_SYNC_DIR |= LN_SYNC_BIT;
-//	IR_SYNC_DIR |= IR_SYNC_BIT;
-//	IR_SYNC_CLR();
-	
-	
-	
-	
 
 	P1SEL = 0;
 	P2SEL = 0;
+	
+	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT);						// 0x73;
+//	P2DIR |= (INTER_BIT|IRED_BIT);																					// 0xC0;
+		P2DIR = 0;
+	
+	P1REN ^= ~(RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|LN_IN_BIT);					//0x73;
+	P2REN |= (INTER_BIT|IRED_BIT);
+
+	P1OUT = 0x40;	
+	P2OUT = 0x00;
 	
 	INTER_INT_Init();				// Init interrupts from Intercom
 }

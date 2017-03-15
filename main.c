@@ -166,24 +166,22 @@ void main(void) {
 	// Initialization variables and GPIO
 	
 	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
-
+	
 	BCSCTL1 = CALBC1_1MHZ; 						// Init internal RC osc.
 	DCOCTL =  CALDCO_1MHZ;						// Используем частоту 1 MГц0.
 	__set_R4_register(0);							
 	
 	// Initialization code for VLO
 		BCSCTL3 |= LFXT1S_2;                    // Select VLO for low freq clock, capacitor off
-	// End initialization code
-	
 	
 	WDTCTL = WDT_ADLY_250;                   	// Interval timer	/* for 50 ms */
-	IE1 |= WDTIE;                           	// Enable WDT interrupt
-	//
-	fLPM3 = 1;								// Enable LOW power mode
-	//
-	
+	IE1 |= WDTIE|NMIIE;                           	// Enable WDT interrupt
 
-	
+	_BIS_SR(GIE);    					// Interrupt enable
+	__bis_SR_register(LPM3_bits);
+	_BIC_SR(GIE);	
+
+	//	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
 	if (IFG1 & WDTIFG) {
 		// Reset WDT
 		#if (SYS_FAULT_ENABLE == 1)
@@ -192,15 +190,14 @@ void main(void) {
 	}
 	IFG1 = 0;
 	
-	DelayMs(2000);
+	DelayMs(3000);
 	
 	GPIO_Init();										// GIPIO Init
 	
-	Led_Flash(10);
+//	Led_Flash(10);
 	DelayMs(300);
-	Led_Flash(10);
-	
-//	DelayMs(6000);
+//	Led_Flash(10);
+
 	
 	_BIS_SR(GIE);    					// Interrupt enable
 	DeviceStart();						// Calibration VLO Timer
@@ -266,14 +263,11 @@ void main(void) {
 					for(ir_num = 0; ir_num < IR_PULSES; ir_num++)
 					{
 						IRED_SET();
-//						IR_SYNC_SET();
 						DelayUs(IR_DUTY);
 						IRED_CLR();
 						DelayUs(IR_PAUSE);
 					}
-	//			}
 			}
-		
 		
 		
 //-------------------------------------------------------------------------------
@@ -298,11 +292,13 @@ void main(void) {
 				fStartPulse =0;
 				
 
-				LN_SYNC_SET();
+				LN_SYNC_SET();	
+//				IRED_SET();
 //				IR_SYNC_SET();
 				DelayUs(100);
 				LN_SYNC_CLR();
 				IR_SYNC_CLR();
+				IRED_CLR();
 				
 //				ir_timer  = IR_TIMEOUT;
 				T0_delay();
@@ -313,21 +309,28 @@ void main(void) {
 //	Indication update			
 			RED_CLR();
 			YEL_CLR();			
-			if (timerA1_blank) {
+			if (timerA1_blank) 
+			{
 				timerA1_blank--;
-			}else{
+			}
+			else
+			{
 				timerA1_blank = 100;
 
 				// Indication
 				//
-				if (light_timer--) {
+				if (light_timer--) 
+				{
 						RED_SET();
-				}else{
+				}
+				else
+				{
 					light_timer = 1;
 						RED_CLR();
 						YEL_CLR();
-					}
 				}
+			}
+
 //	end of Indication update
 		}//fTimerA_On
 
@@ -350,9 +353,10 @@ __interrupt void watchdog_timer (void) {
 		}
 	}
 	fTimer50msOn = 1;
+	
 
 	
-//	__bic_SR_register_on_exit(LPM3_bits);                   // Clear LPM3 bits from 0(SR)
+	__bic_SR_register_on_exit(LPM3_bits);                   // Clear LPM3 bits from 0(SR)
 }
 
 
@@ -366,10 +370,8 @@ __interrupt void watchdog_timer (void) {
 //--------------------------------------------------------------------------------
 void Led_Flash(u16 duration) {
 	RED_SET();
-	YEL_SET();
 	DelayMs(duration);
 	RED_CLR();
-	YEL_CLR();
 }
 
 //--------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-393754584
+Checksum=503632025
 [CodeCoverage]
 Enabled=_ 0
 [CallStack]
@@ -77,9 +77,23 @@ GraphEnabled=0
 ShowTimeLog=1
 LiveEnabled=0
 LiveFile=PowerLogLive.log
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[PowerProbe]
+Frequency=10000
+Probe0=Current
+ProbeSetup0=0 1 1 2 0 0
+Probe1=Voltage
+ProbeSetup1=1 1 1 4 0 0
+Probe2=Energy
+ProbeSetup2=4 1 1 10 0 0
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.199.2" 0 0 0 0 "" 0 ""
-Count=1
+Count=0
 [FET]
 Clock mode=39
 Secure Password=
@@ -99,21 +113,6 @@ SP=0
 SR=0
 all registers=0
 File name=
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0
-[PowerProbe]
-Frequency=10000
-Probe0=Current
-ProbeSetup0=0 1 1 2 0 0
-Probe1=Voltage
-ProbeSetup1=1 1 1 4 0 0
-Probe2=Energy
-ProbeSetup2=4 1 1 10 0 0

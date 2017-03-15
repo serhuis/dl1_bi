@@ -58,8 +58,6 @@ void SysTimerInit(void) {
 	_BIC_SR(GIE);    					// Запрещаем прерывания
 	//
 
-//	fLPM3 = 0;							// Выключаем режим энергосбережения	
-	//
 	TA0R = 0;
 	TA0CTL 	 = TASSEL_2 + MC_1 + ID_0;  // SMCLK, up mode, div = 1
 	TA0CCR0  = SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
