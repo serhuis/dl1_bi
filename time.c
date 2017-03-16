@@ -66,6 +66,7 @@ void SysTimerInit(void) {
 	//
 	_BIS_SR(GIE);    					// Разрешаем прерывания
 
+	
 }
 
 void T0_delay(void)
@@ -82,34 +83,12 @@ void T0_delay(void)
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void CCR0_ISR(void) {
   fTimerA_On = 1;
-	/*
-	if (fRedLedFlash) {
-		fRedLedFlash = 0;
-		RED_CLR();
-		//
-		fTimerA_Enable = 0;
-		TACTL = 0;  
-		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
-		//
-		return;
-	}
-	*/
+	__bic_SR_register_on_exit(LPM1_bits);		//exit LowPower mode
 } // CCR0_ISR
 
 #pragma vector = TIMER0_A1_VECTOR
 __interrupt void CCR1_ISR(void) {
   fIrTimerOn = 1;
 	TACCTL1 = 0;
-	/*
-	if (fRedLedFlash) {
-		fRedLedFlash = 0;
-		RED_CLR();
-		//
-		fTimerA_Enable = 0;
-		TACTL = 0;  
-		TACCTL0 = 0;				// Запрещаем прерывание таймера по достижению значения TACCCR0.
-		//
-		return;
-	}
-	*/
+	__bic_SR_register_on_exit(LPM1_bits);		//exit LowPower mode
 } // CCR0_ISR

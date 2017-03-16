@@ -172,40 +172,31 @@ void main(void) {
 	__set_R4_register(0);							
 	
 	// Initialization code for VLO
-		BCSCTL3 |= LFXT1S_2;                    // Select VLO for low freq clock, capacitor off
+	BCSCTL3 |= LFXT1S_2;                    // Select VLO for low freq clock, capacitor off
 	
-	WDTCTL = WDT_ADLY_250;                   	// Interval timer	/* for 50 ms */
+	WDTCTL = WDT_ADLY_1000;                   	// Interval timer	/* for 1000 ms */
 	IE1 |= WDTIE|NMIIE;                           	// Enable WDT interrupt
-
 	_BIS_SR(GIE);    					// Interrupt enable
-	__bis_SR_register(LPM3_bits);
-	_BIC_SR(GIE);	
+	
+	__bis_SR_register(LPM1_bits);
+		
+	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер	
+		_BIC_SR(GIE);	
 
-	//	WDTCTL = WDTPW + WDTHOLD;				// отключаем сторожевой таймер
-	if (IFG1 & WDTIFG) {
-		// Reset WDT
-		#if (SYS_FAULT_ENABLE == 1)
-		DeviceFault.fFaultSWReset = 1;
-		#endif
-	}
-	IFG1 = 0;
-	
-	DelayMs(3000);
-	
+	IFG1 = 0;												//clear global interrupt flag
+
 	GPIO_Init();										// GIPIO Init
-	
-//	Led_Flash(10);
-	DelayMs(300);
-//	Led_Flash(10);
-
-	
-	_BIS_SR(GIE);    					// Interrupt enable
-	DeviceStart();						// Calibration VLO Timer
-
-	cfg_reg = CONFIG->config_reg;
-	
+	DeviceStart();									// Calibration VLO Timer
 	SysTimerInit();
 	
+	Led_Flash(10);
+	DelayMs(200);
+	Led_Flash(10);
+
+		_BIS_SR(GIE);    					// Interrupt enable
+
+//	__bis_SR_register(LPM1_bits);
+
 	
 // *****************************************************************
 // ******************   M A I N   L O O P  *************************
@@ -262,11 +253,14 @@ void main(void) {
 					fIrTimerOn = 0;
 					for(ir_num = 0; ir_num < IR_PULSES; ir_num++)
 					{
-						IRED_SET();
+//						IRED_SET();
+						IR_SYNC_SET();
 						DelayUs(IR_DUTY);
-						IRED_CLR();
+//						IRED_CLR();
+IR_SYNC_CLR();
 						DelayUs(IR_PAUSE);
 					}
+					LPM0;
 			}
 		
 		
@@ -293,16 +287,11 @@ void main(void) {
 				
 
 				LN_SYNC_SET();	
-//				IRED_SET();
-//				IR_SYNC_SET();
 				DelayUs(100);
 				LN_SYNC_CLR();
-				IR_SYNC_CLR();
-				IRED_CLR();
 				
 //				ir_timer  = IR_TIMEOUT;
 				T0_delay();
-//				fIrTimerOn = 1;
 			}
 	
 			
@@ -315,7 +304,7 @@ void main(void) {
 			}
 			else
 			{
-				timerA1_blank = 100;
+				timerA1_blank = 50;
 
 				// Indication
 				//
@@ -356,7 +345,7 @@ __interrupt void watchdog_timer (void) {
 	
 
 	
-	__bic_SR_register_on_exit(LPM3_bits);                   // Clear LPM3 bits from 0(SR)
+	__bic_SR_register_on_exit(LPM1_bits);                   // Clear LPM3 bits from 0(SR)
 }
 
 

@@ -40,9 +40,10 @@
 #define SYS_FAULT_ENABLE		1	/* 1 - detect System Fault, 0 - no detect System Fault */
 #define CRC_ENABLE				1	/* 1 - control memory enable, 0 - control memory disable */
 
-#define	SYNC_PERIOD			100 		/* in ticks */
+//#define	SYNC_PERIOD			100 		/* in ticks */
+#define	SYNC_PERIOD			120 		/* in ticks */
 #define IR_TIMEOUT			1			/**/
-#define	IR_PULSES				3				/*number of IR signal pulses*/
+#define	IR_PULSES				5				/*number of IR signal pulses*/
 #define IR_DUTY					48			/*pulse width of IRED pulse*/
 #define	IR_PAUSE				148			/*pause of IRED pulses*/
 

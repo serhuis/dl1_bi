@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           15/Mar/2017  17:19:47
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           16/Mar/2017  17:47:09
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -151,14 +151,14 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
     122          	P2SEL = 0;
     123          	
     124          	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT);						// 0x73;
-    125          //	P2DIR |= (INTER_BIT|IRED_BIT);																					// 0xC0;
-    126          		P2DIR = 0;
+    125          	P2DIR |= (INTER_BIT|IRED_BIT);																					// 0xC0;
+    126          //		P2DIR = 0;
     127          	
     128          	P1REN ^= ~(RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|LN_IN_BIT);					//0x73;
-    129          	P2REN |= (INTER_BIT|IRED_BIT);
+    129          //	P2REN |= (INTER_BIT|IRED_BIT);
     130          
     131          	P1OUT = 0x40;	
-    132          	P2OUT = 0x00;
+    132          	P2OUT = 0x80;
     133          	
     134          	INTER_INT_Init();				// Init interrupts from Intercom
     135          }
@@ -184,7 +184,7 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        1  CALBC1_8MHZ
        1  CALDCO_8MHZ
        1  DCOCTL
-      44  GPIO_Init
+      42  GPIO_Init
        2  INTER_INT_Init
        1  P1DIR
        1  P1OUT
@@ -194,7 +194,6 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        1  P2IE
        1  P2IFG
        1  P2OUT
-       1  P2REN
        1  P2SEL
        2  PORT1_ISR
        2  PORT1_ISR::??INTVEC 4
@@ -202,13 +201,13 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        2  PORT2_ISR::??INTVEC 6
 
  
- 84 bytes in segment CODE
- 14 bytes in segment DATA16_AN
+ 82 bytes in segment CODE
+ 13 bytes in segment DATA16_AN
   4 bytes in segment INTVEC
  
- 84 bytes of CODE  memory
+ 82 bytes of CODE  memory
   0 bytes of CONST memory (+  4 bytes shared)
-  0 bytes of DATA  memory (+ 14 bytes shared)
+  0 bytes of DATA  memory (+ 13 bytes shared)
 
 Errors: none
 Warnings: none
