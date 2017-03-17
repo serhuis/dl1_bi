@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=240386858
+Checksum=1225354451
 [CodeCoverage]
 Enabled=_ 0
 [CallStack]
@@ -93,7 +93,7 @@ ProbeSetup1=1 1 1 4 0 0
 Probe2=Energy
 ProbeSetup2=4 1 1 10 0 0
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.242.4" 1 0 0 0 "" 0 ""
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\hardware.h}.107.1" 0 0 0 0 "" 0 ""
 Count=1
 [FET]
 Clock mode=39

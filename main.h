@@ -68,11 +68,11 @@ typedef struct  {
 		u16	 bTimer50msOn 	: 1;				/* Закончился 50мс интервал от WDT	*/
 		u16	 bTimerA_On			: 1;        		/* End of Timer A period	*/
 		u16	 bTimerA_Repeat	: 1;        		/* Flag: Multipulse of timer	*/
-		u16	 bButtonDownOn	: 1;        		/* Была нажата кнопка	*/
-		u16	 bButtonUpOn		: 1;        		/* Была отжата кнопка	*/
+		u16	 : 1;        		/* Была нажата кнопка	*/
+		u16	 : 1;        		/* Была отжата кнопка	*/
 		u16	 bIRStartPulse	: 1;        		/* Flag: IR Start pulse is received */
-		u16	 bLineDownOn		: 1;				/* For Soft UART */
-		u16	 bLPM3					: 1;        		/* Флаг режима низкого потребления	*/
+		u16	 bScanDist			: 1;				/* For Soft UART */
+		u16	 : 1;        		/* Флаг режима низкого потребления	*/
 		u16	 bInterconnect	: 1;        		/* Flag link of Interconnect	*/
 		u16	 bStartPulse		: 1;        		/* Flag: Start pulse is received */
 		u16	 bIrYimerOn			: 1;        						
@@ -99,8 +99,8 @@ typedef struct  {
 #define	fButtonUpOn	f.bButtonUpOn           /* Была отжата кнопка	*/
 #define	fEndOfSamples	f.bEndOfSamples         /* Flag: End of samples of ADC */
 #define	fIRStartPulse	f.bIRStartPulse         /* Flag: IR Start pulse is received */
+#define fscanDistance f.bScanDist			
 #define	fRxLineDownOn	f.bLineDownOn			/* For Soft UART */
-#define	fLPM3		f.bLPM3                 /* Флаг режима низкого потребления	*/
 
 #define	fInterconnect	f.bInterconnect         /* Flag link of Interconnect	*/
 #define	fIrTimerOn		f.bIrYimerOn           		/* Flag: HUSH mode	*/

@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           17/Mar/2017  11:43:08
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           17/Mar/2017  17:27:35
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -110,7 +110,7 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
      81          		BCSCTL1 = CALBC1_8MHZ; 					// Используем частоту 8 MГц
      82          		DCOCTL =  CALDCO_8MHZ;
      83          		//
-     84          		fRxLineDownOn = 1;
+     84          //		fRxLineDownOn = 1;
      85          		//
      86          		//__bic_SR_register_on_exit(LPM3_bits);   // Clear LPM3 bits from 0(SR) Просыпаемся
      87          		
@@ -150,25 +150,44 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
     121          	P1SEL = 0;
     122          	P2SEL = 0;
     123          	
-    124          	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT);						// 0x73;
-    125          	P2DIR |= (INTER_BIT|IRED_BIT);																					// 0xC0;
-    126          //		P2DIR = 0;
-    127          	
-    128          	P1REN ^= ~(RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|LN_IN_BIT);					//0x73;
-    129          //	P2REN |= (INTER_BIT|IRED_BIT);
-    130          
-    131          	P1OUT = 0x40;	
-    132          	P2OUT = 0x80;
-    133          	
-    134          	INTER_INT_Init();				// Init interrupts from Intercom
-    135          }
-    136          
-    137          // End hardware.c
+    124          	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|DIST_EN_BIT);						
+    125          	P2DIR |= (INTER_BIT|IRED_BIT);																					
+    126          	
+    127          	P1OUT = 0x40;	
+    128          	P2OUT = 0x80;
+    129          	
+    130          	P1REN |= DIST_IN_BIT;
+    131          	
+    132          	INTER_INT_Init();				// Init interrupts from Intercom
+    133          }
+    134          
+    135          
+    136          tDistance distance;
+    137          tDistance CheckDistance(void)
+    138          {
+    139          	tDistance retval = DISTANCE_PROCESSING;
+    140          	
+    141          	if(distance == DISTANCE_PROCESSING)
+    142          	{
+    143          		if(getDistValue())
+    144          			retval = DISTANCE_NEAR;
+    145          		else
+    146          			retval = DISTANCE_FAR;
+    147          		
+    148          		DistScanDis();
+    149          	}
+    150          	else{
+    151          		DistScanEn();
+    152          }
+    153          
+    154          	return retval;
+    155          }
 
    Maximum stack usage in bytes:
 
    CSTACK Function
    ------ --------
+      2   CheckDistance
       2   GPIO_Init
         0   -> INTER_INT_Init
       2   INTER_INT_Init
@@ -183,10 +202,12 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        1  BCSCTL1
        1  CALBC1_8MHZ
        1  CALDCO_8MHZ
+      32  CheckDistance
        1  DCOCTL
-      42  GPIO_Init
+      40  GPIO_Init
        2  INTER_INT_Init
        1  P1DIR
+       1  P1IN
        1  P1OUT
        1  P1REN
        1  P1SEL
@@ -197,17 +218,19 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\hardware.c
        1  P2SEL
        2  PORT1_ISR
        2  PORT1_ISR::??INTVEC 4
-      36  PORT2_ISR
+      32  PORT2_ISR
        2  PORT2_ISR::??INTVEC 6
+       1  distance
 
  
- 82 bytes in segment CODE
- 13 bytes in segment DATA16_AN
-  4 bytes in segment INTVEC
+ 108 bytes in segment CODE
+  14 bytes in segment DATA16_AN
+   1 byte  in segment DATA16_Z
+   4 bytes in segment INTVEC
  
- 82 bytes of CODE  memory
-  0 bytes of CONST memory (+  4 bytes shared)
-  0 bytes of DATA  memory (+ 13 bytes shared)
+ 108 bytes of CODE  memory
+   0 bytes of CONST memory (+  4 bytes shared)
+   1 byte  of DATA  memory (+ 14 bytes shared)
 
 Errors: none
 Warnings: none

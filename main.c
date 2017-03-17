@@ -82,6 +82,9 @@ u16	light_timer = 1;	// For led lighting
 u8	sync_timer = SYNC_PERIOD;		// For led lighting syncronisation
 u8	ir_timer  = IR_TIMEOUT;
 
+
+
+
 /*********************************************************************************/
 /*                                FUNCTIONS                                      */
 /*********************************************************************************/
@@ -187,6 +190,7 @@ void main(void) {
 
 	GPIO_Init();										// GIPIO Init
 
+	distance = DISTANCE_PROCESSING;
 
 	
 	Led_Flash(10);
@@ -255,13 +259,25 @@ void main(void) {
 					fIrTimerOn = 0;
 					for(ir_num = 0; ir_num < IR_PULSES; ir_num++)
 					{
-//						IRED_SET();
-						IR_SYNC_SET();
-						DelayUs(IR_DUTY);
-//						IRED_CLR();
-IR_SYNC_CLR();
-						DelayUs(IR_PAUSE);
+				
+						if(distance == DISTANCE_FAR){
+							IR_SYNC_SET();
+							DelayUs(IR_DUTY);
+							IR_SYNC_CLR();
+							DelayUs(IR_PAUSE);
+						}
+
+						else if(distance == DISTANCE_NEAR)
+						{
+							IRED_SET();
+							DelayUs(IR_DUTY);
+							IRED_CLR();
+							DelayUs(IR_PAUSE);
+						}
+							
 					}
+					
+					fscanDistance =1;								//start scaning distance
 //					LPM0;
 //__bis_SR_register(LPM1_bits);
 			}
@@ -294,10 +310,18 @@ IR_SYNC_CLR();
 				LN_SYNC_CLR();
 				
 //				ir_timer  = IR_TIMEOUT;
+				
 				T0_delay();
+				
 			}
-	
 			
+	
+			if(fscanDistance)
+			{
+				 distance = CheckDistance();
+				 if(distance != DISTANCE_PROCESSING)
+					 fscanDistance = 0; 
+			}
 //	Indication update			
 			RED_CLR();
 			YEL_CLR();			
@@ -313,7 +337,15 @@ IR_SYNC_CLR();
 				//
 				if (light_timer--) 
 				{
+					if(distance == DISTANCE_FAR)
+						YEL_SET();
+					else if(distance == DISTANCE_NEAR)
 						RED_SET();
+					else
+					{
+						YEL_SET();
+						RED_SET();
+					}
 				}
 				else
 				{

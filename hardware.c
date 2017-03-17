@@ -81,7 +81,7 @@ __interrupt void PORT2_ISR(void) {
 		BCSCTL1 = CALBC1_8MHZ; 					// Используем частоту 8 MГц
 		DCOCTL =  CALDCO_8MHZ;
 		//
-		fRxLineDownOn = 1;
+//		fRxLineDownOn = 1;
 		//
 		//__bic_SR_register_on_exit(LPM3_bits);   // Clear LPM3 bits from 0(SR) Просыпаемся
 		
@@ -121,17 +121,35 @@ void GPIO_Init(void) {
 	P1SEL = 0;
 	P2SEL = 0;
 	
-	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT);						// 0x73;
-	P2DIR |= (INTER_BIT|IRED_BIT);																					// 0xC0;
-//		P2DIR = 0;
+	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|DIST_EN_BIT);						
+	P2DIR |= (INTER_BIT|IRED_BIT);																					
 	
-	P1REN ^= ~(RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|LN_IN_BIT);					//0x73;
-//	P2REN |= (INTER_BIT|IRED_BIT);
-
 	P1OUT = 0x40;	
 	P2OUT = 0x80;
+	
+	P1REN |= DIST_IN_BIT;
 	
 	INTER_INT_Init();				// Init interrupts from Intercom
 }
 
-// End hardware.c
+
+tDistance distance;
+tDistance CheckDistance(void)
+{
+	tDistance retval = DISTANCE_PROCESSING;
+	
+	if(distance == DISTANCE_PROCESSING)
+	{
+		if(getDistValue())
+			retval = DISTANCE_NEAR;
+		else
+			retval = DISTANCE_FAR;
+		
+		DistScanDis();
+	}
+	else{
+		DistScanEn();
+}
+
+	return retval;
+}

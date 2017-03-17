@@ -86,12 +86,46 @@
 #define	INTER_SET()				INTER_OUT |= INTER_BIT
 #define	INTER_CLR()				INTER_OUT &= ~INTER_BIT
 
+// Distance switch
+#define DIST_IN_DIR					P1DIR
+#define DIST_IN							P1IN
+#define DIST_IN_BIT  				BIT3
+#define getDistValue()			(P1IN & DIST_IN_BIT)
+
+#define DIST_EN_DIR					P1DIR
+#define DIST_EN_OUT					P1OUT
+#define DIST_EN_BIT  				BIT2
+#define DistScanEn()				DIST_EN_OUT |= DIST_EN_BIT
+#define DistScanDis()				DIST_EN_OUT &= ~DIST_EN_BIT
+
+
+
+//typedefs
+typedef enum {
+	DISTANCE_PROCESSING = 0,
+	DISTANCE_NEAR,
+	DISTANCE_FAR
+}tDistance;
 
 /*********************************************************************************/
 /*                                FUNCTIONS                                      */
 /*********************************************************************************/
 // Function prototipes
 void GPIO_Init(void);
+tDistance CheckDistance(void);
+
+
+
+
+
+
+// Externals
+extern tDistance distance;
+
+
+
+
+
 
 #endif  /* __HARDWARE_H__ */
 
