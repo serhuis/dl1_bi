@@ -6,74 +6,133 @@
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\Debug\Obj\DL1R_BI.pbd</file>
-      <file>$PROJ_DIR$\Debug\Obj\flash.r43</file>
-      <file>$PROJ_DIR$\Debug\List\flash.lst</file>
-      <file>$PROJ_DIR$\Debug\Exe\DL1R_BI.d43</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\delay.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\time.pbi</file>
-      <file>$PROJ_DIR$\Debug\Exe\DL1R_BI.ulp</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\stdio.h</file>
-      <file>$TOOLKIT_DIR$\config\linker\lnk430g2332.xcl</file>
-      <file>$TOOLKIT_DIR$\inc\msp430g2332.h</file>
-      <file>$PROJ_DIR$\..\flash.h</file>
-      <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
-      <file>$PROJ_DIR$\Debug\List\delay.lst</file>
-      <file>$TOOLKIT_DIR$\inc\in430.h</file>
-      <file>$PROJ_DIR$\..\hardware.c</file>
-      <file>$PROJ_DIR$\..\delay.c</file>
-      <file>$PROJ_DIR$\..\main.c</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\delay.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\flash.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\hardware.r43</file>
-      <file>$PROJ_DIR$\..\flash.c</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
-      <file>$PROJ_DIR$\..\time.c</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\ystdio.h</file>
-      <file>$PROJ_DIR$\Debug\List\main.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\..\delay.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\List\DL1R_BI.map</file>
+      <file>$PROJ_DIR$\..\time.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\main.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\time.r43</file>
+      <file>$PROJ_DIR$\Debug\List\time.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
+      <file>$PROJ_DIR$\Debug\List\hardware.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\..\hardware.h</file>
+      <file>$PROJ_DIR$\..\type.h</file>
+      <file>$PROJ_DIR$\Debug\List\main.lst</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
       <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.h</file>
       <file>$PROJ_DIR$\Debug\Obj\hardware.pbi</file>
-      <file>$PROJ_DIR$\..\type.h</file>
-      <file>$PROJ_DIR$\..\delay.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
-      <file>$PROJ_DIR$\Debug\List\hardware.lst</file>
-      <file>$PROJ_DIR$\Debug\List\DL1R_BI.map</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
-      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
-      <file>$PROJ_DIR$\..\main.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\Debug\List\time.lst</file>
-      <file>$PROJ_DIR$\..\time.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\time.r43</file>
-      <file>$PROJ_DIR$\..\hardware.h</file>
+      <file>$TOOLKIT_DIR$\inc\msp430g2332.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\DL1R_BI.ulp</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\stdio.h</file>
+      <file>$PROJ_DIR$\Debug\List\flash.lst</file>
+      <file>$PROJ_DIR$\..\flash.h</file>
+      <file>$PROJ_DIR$\Debug\List\delay.lst</file>
+      <file>$TOOLKIT_DIR$\inc\in430.h</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\hardware.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\config\linker\lnk430g2332.xcl</file>
+      <file>$PROJ_DIR$\Debug\Obj\flash.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\time.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\delay.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\delay.r43</file>
+      <file>$PROJ_DIR$\Debug\Exe\DL1R_BI.d43</file>
+      <file>$PROJ_DIR$\Debug\Obj\flash.r43</file>
+      <file>$PROJ_DIR$\..\flash.c</file>
+      <file>$PROJ_DIR$\..\main.c</file>
+      <file>$PROJ_DIR$\..\delay.c</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
+      <file>$PROJ_DIR$\..\hardware.c</file>
+      <file>$PROJ_DIR$\..\time.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\DL1R_BI.pbd</file>
     </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 37 4</file>
+        </tool>
+        <tool>
+          <name>ULP430</name>
+          <file> 20</file>
+        </tool>
+      </outputs>
+    </file>
     <file>
       <name>$PROJ_DIR$\Debug\Exe\DL1R_BI.d43</name>
       <outputs>
         <tool>
           <name>XLINK</name>
-          <file> 37</file>
+          <file> 4</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>XLINK</name>
-          <file> 9 5 1 21 30 44 12</file>
+          <file> 29 36 38 27 10 8 26</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\hardware.c</name>
+      <name>$PROJ_DIR$\..\flash.c</name>
       <outputs>
         <tool>
           <name>ICC430</name>
-          <file> 36 21</file>
+          <file> 22 38</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 42 35 3 33 17 6 16 34 28 13 19 25 1 14 23 7 2 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 19 17 7 28 35 16 14 23 6 25 13 3 33 34 1 5 42 2</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 15 10</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 21 35 3 33 17 6 16 34 28 0 42 7 14 13 19 25 1 23 2 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 35 6 2 14 7 28 16 17 3 23 25 42 0 33 34 13 5 19 21 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\delay.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 24 36</file>
         </tool>
         <tool>
           <name>BICOMP</name>
@@ -83,80 +142,34 @@
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 45 10 14 39 33 40 11 34 43</file>
+          <file> 13 19 25 1 14</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 33 14 40 10 39 45 43 11 34</file>
+          <file> 25 1 19 13 14</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\delay.c</name>
+      <name>$PROJ_DIR$\..\hardware.c</name>
       <outputs>
         <tool>
           <name>ICC430</name>
-          <file> 13 5</file>
+          <file> 11 27</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 19</file>
+          <file> 18</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 45 10 14 39 33</file>
+          <file> 13 19 25 1 14 7 23 2 5</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 14 39 10 45 33</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\main.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 28 30</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 29</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 8 25 38 24 31 35 41 18 23 27 4 40 33 45 10 14 39 11 34 43</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 25 35 34 33 40 23 41 31 38 11 14 4 27 24 18 45 43 10 8 39</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\flash.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 2 1</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 20</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 4 25 38 24 31 35 41 18 23 45 10 14 39 33 11 40 34 43</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 10 31 40 23 25 41 33 11 35 14 45 38 24 18 39 43 4 34</file>
+          <file> 14 25 7 19 1 13 5 23 2</file>
         </tool>
       </inputs>
     </file>
@@ -165,36 +178,23 @@
       <outputs>
         <tool>
           <name>ICC430</name>
-          <file> 42 44</file>
+          <file> 9 8</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 6</file>
+          <file> 31</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 40 33 45 10 14 39 11 34 43</file>
+          <file> 7 14 13 19 25 1 23 2 5</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 10 45 43 14 33 39 11 34 40</file>
+          <file> 14 23 2 25 5 13 19 1 7</file>
         </tool>
       </inputs>
-    </file>
-    <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
-        <tool>
-          <name>ULP430</name>
-          <file> 7</file>
-        </tool>
-        <tool>
-          <name>XLINK</name>
-          <file> 3 37</file>
-        </tool>
-      </outputs>
     </file>
   </configuration>
   <configuration>

@@ -20,7 +20,7 @@ void VLO_TimerCalibr(void) {
 	TACTL = TASSEL_2 + MC_1 + ID_3;     	 	// SMCLK, up mode  / 8
 	//			
 	CCR0 = 62500 - 1;	                    // Period 0.5sec
-	CCTL1 = 0; 			                    // CCR1 reset/set
+//	CCTL1 = 0; 			                    // CCR1 reset/set
 	TACCTL0 = CCIE;							// Разрешаем прерывание таймера по достижению значения TACCCR0.
 	//
 	clk = 0;
@@ -61,12 +61,10 @@ void SysTimerInit(void) {
 	TA0R = 0;
 	TA0CTL 	 = TASSEL_2 + MC_1 + ID_0;  // SMCLK, up mode, div = 1
 	TA0CCR0  = SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
-	TA0CCR1 = DELAY_1MS;							//for 1 ms delay;
+	TA0CCR1 = DELAY_1MS-1;							//for 1 ms delay;
 	TA0CCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
 	//
 	_BIS_SR(GIE);    					// Разрешаем прерывания
-
-	
 }
 
 void T0_delay(void)

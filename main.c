@@ -186,15 +186,17 @@ void main(void) {
 	IFG1 = 0;												//clear global interrupt flag
 
 	GPIO_Init();										// GIPIO Init
-	DeviceStart();									// Calibration VLO Timer
-	SysTimerInit();
+
+
 	
 	Led_Flash(10);
 	DelayMs(200);
 	Led_Flash(10);
 
 		_BIS_SR(GIE);    					// Interrupt enable
-
+//	DeviceStart();									// Calibration VLO Timer
+	VLO_TimerCalibr();			// Calibration VLO Timer
+	SysTimerInit();
 //	__bis_SR_register(LPM1_bits);
 
 	
@@ -260,7 +262,8 @@ void main(void) {
 IR_SYNC_CLR();
 						DelayUs(IR_PAUSE);
 					}
-					LPM0;
+//					LPM0;
+//__bis_SR_register(LPM1_bits);
 			}
 		
 		
@@ -359,8 +362,10 @@ __interrupt void watchdog_timer (void) {
 //--------------------------------------------------------------------------------
 void Led_Flash(u16 duration) {
 	RED_SET();
+	YEL_SET();
 	DelayMs(duration);
 	RED_CLR();
+	YEL_CLR();
 }
 
 //--------------------------------------------------------------------------------

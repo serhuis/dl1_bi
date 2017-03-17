@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           16/Mar/2017  17:47:09
+# IAR C/C++ Compiler V6.40.1.950/W32 for MSP430           17/Mar/2017  12:10:17
 # Copyright 1996-2015 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for Texas Instruments MSP430
 #
@@ -49,7 +49,7 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
      20          	TACTL = TASSEL_2 + MC_1 + ID_3;     	 	// SMCLK, up mode  / 8
      21          	//			
      22          	CCR0 = 62500 - 1;	                    // Period 0.5sec
-     23          	CCTL1 = 0; 			                    // CCR1 reset/set
+     23          //	CCTL1 = 0; 			                    // CCR1 reset/set
      24          	TACCTL0 = CCIE;							// Разрешаем прерывание таймера по достижению значения TACCCR0.
      25          	//
      26          	clk = 0;
@@ -90,37 +90,35 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
      61          	TA0R = 0;
      62          	TA0CTL 	 = TASSEL_2 + MC_1 + ID_0;  // SMCLK, up mode, div = 1
      63          	TA0CCR0  = SYS_TICK_TIME - 1;   	// Period T(us) * F(MHz)
-     64          	TA0CCR1 = DELAY_1MS;							//for 1 ms delay;
+     64          	TA0CCR1 = DELAY_1MS-1;							//for 1 ms delay;
      65          	TA0CCTL0 = CCIE;					// Разрешаем прерывание таймера по достижению значения TACCCR0.
      66          	//
      67          	_BIS_SR(GIE);    					// Разрешаем прерывания
-     68          
-     69          	
-     70          }
-     71          
-     72          void T0_delay(void)
-     73          {
-     74          	TA0CCTL1 = CCIE;
-     75          }
-     76          
-     77          //--------------------------------------------------------------------------------
-     78          // Function		: __interrupt void CCR0_ISR(void)
-     79          // Parameters	: None
-     80          // Return		: None
-     81          // Description	: TIMER0 Interrupt routine
-     82          //--------------------------------------------------------------------------------
-     83          #pragma vector = TIMER0_A0_VECTOR
-     84          __interrupt void CCR0_ISR(void) {
-     85            fTimerA_On = 1;
-     86          	__bic_SR_register_on_exit(LPM1_bits);		//exit LowPower mode
-     87          } // CCR0_ISR
-     88          
-     89          #pragma vector = TIMER0_A1_VECTOR
-     90          __interrupt void CCR1_ISR(void) {
-     91            fIrTimerOn = 1;
-     92          	TACCTL1 = 0;
-     93          	__bic_SR_register_on_exit(LPM1_bits);		//exit LowPower mode
-     94          } // CCR0_ISR
+     68          }
+     69          
+     70          void T0_delay(void)
+     71          {
+     72          	TA0CCTL1 = CCIE;
+     73          }
+     74          
+     75          //--------------------------------------------------------------------------------
+     76          // Function		: __interrupt void CCR0_ISR(void)
+     77          // Parameters	: None
+     78          // Return		: None
+     79          // Description	: TIMER0 Interrupt routine
+     80          //--------------------------------------------------------------------------------
+     81          #pragma vector = TIMER0_A0_VECTOR
+     82          __interrupt void CCR0_ISR(void) {
+     83            fTimerA_On = 1;
+     84          	__bic_SR_register_on_exit(LPM1_bits);		//exit LowPower mode
+     85          } // CCR0_ISR
+     86          
+     87          #pragma vector = TIMER0_A1_VECTOR
+     88          __interrupt void CCR1_ISR(void) {
+     89            fIrTimerOn = 1;
+     90          	TACCTL1 = 0;
+     91          	__bic_SR_register_on_exit(LPM1_bits);		//exit LowPower mode
+     92          } // CCR0_ISR
 
    Maximum stack usage in bytes:
 
@@ -151,14 +149,14 @@ E:\_ARTON_PROJ\Arton-DL1-R\BI\soft\git\time.c
        2  TA0CCTL1
        2  TA0CTL
        2  TA0R
-      80  VLO_TimerCalibr
+      76  VLO_TimerCalibr
 
  
- 148 bytes in segment CODE
+ 144 bytes in segment CODE
   12 bytes in segment DATA16_AN
    4 bytes in segment INTVEC
  
- 148 bytes of CODE  memory
+ 144 bytes of CODE  memory
    0 bytes of CONST memory (+  4 bytes shared)
    0 bytes of DATA  memory (+ 12 bytes shared)
 
