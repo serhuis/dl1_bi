@@ -121,13 +121,18 @@ void GPIO_Init(void) {
 	P1SEL = 0;
 	P2SEL = 0;
 	
-	P1DIR |= (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|DIST_EN_BIT);						
-	P2DIR |= (INTER_BIT|IRED_BIT);																					
-	
 	P1OUT = 0x40;	
 	P2OUT = 0x80;
 	
-	P1REN |= DIST_IN_BIT;
+	P1DIR = (RED_BIT|YEL_BIT|LN_SYNC_BIT|IR_SYNC_BIT|DIST_EN_BIT);						
+	P2DIR = (INTER_BIT|IRED_BIT);																					
+	
+//------------------------------------------	
+//Enable Pull-up for Distance Input
+//	P1REN = DIST_IN_BIT;
+//	P1OUT |= DIST_IN_BIT;	
+//
+	
 	
 	INTER_INT_Init();				// Init interrupts from Intercom
 }
